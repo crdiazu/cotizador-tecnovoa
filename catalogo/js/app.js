@@ -426,10 +426,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         headers.push(curHeader.trim().toLowerCase());
 
-        const getIndex = (synonyms, fallback) => {
+        const getIndex = (synonyms, fallback, preferLast = false) => {
             for (let name of synonyms) {
                 const idx = headers.indexOf(name);
-                if (idx !== -1) return idx;
+                if (idx !== -1) {
+                    if (!preferLast) return idx;
+                    // Prefer the LAST occurrence (e.g. 'update' vs 'UPDATE' columns)
+                    let last = idx;
+                    for (let j = idx + 1; j < headers.length; j++) {
+                        if (headers[j] === name) last = j;
+                    }
+                    return last;
+                }
             }
             // Check if any header starts with or contains the synonym (partial match)
             for (let name of synonyms) {
@@ -447,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const priceUsdIdx = getIndex(['precio neto venta usd', 'precio venta usd', 'precio_usd', 'price_usd'], 8);
         const priceClpIdx = getIndex(['precio neto venta clp', 'precio venta clp', 'precio_clp', 'price_clp'], 9);
         const imgIdx = getIndex(['imagen', 'image', 'foto'], 10);
-        const dateIdx = getIndex(['update', 'actualizado', 'date', 'fecha'], 12);
+        const dateIdx = getIndex(['update', 'actualizado', 'date', 'fecha'], 12, true);
         const costUsdIdx = getIndex(['costo unit. usd', 'costo unit usd', 'costo_usd', 'cost_usd'], 14);
         const costClpIdx = getIndex(['costo unit clp', 'costo unit clp', 'costo_clp', 'cost_clp'], 15);
         const marginIdx = getIndex(['margen', 'margin', 'profit'], 17);
@@ -790,23 +798,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function parseSheetDate(str) {
+        // Formatos: 'd/m/yyyy', 'd/m/yyyy HH:mm:ss' o 'yyyy-mm-dd'
+        const s = String(str || '').trim();
+        let m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+        if (m) return new Date(+m[3], +m[2] - 1, +m[1]);
+        m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+        if (m) return new Date(+m[1], +m[2] - 1, +m[3]);
+        return null;
+    }
+
+    function formatDate(d) {
+        return d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+    }
+
     function checkUpdateDate() {
         if (allProducts.length === 0) return;
-        const updateDate = allProducts[0].date;
-        const today = new Date().toISOString().split('T')[0];
         const statusDiv = document.getElementById('updateStatus');
-        
-        if (updateDate === today) {
+
+        // Fecha más reciente entre TODOS los productos (no solo el primero)
+        let maxDate = null;
+        for (const p of allProducts) {
+            if (!p.date) continue;
+            const d = parseSheetDate(p.date);
+            if (d && (!maxDate || d > maxDate)) maxDate = d;
+        }
+        if (!maxDate) return;
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const isToday = maxDate.getTime() === today.getTime();
+        const displayDate = formatDate(maxDate);
+
+        if (isToday) {
             statusDiv.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 6px; color: var(--success); font-size: 0.75rem;">
                     <span style="font-weight: 700;">● Datos de hoy</span>
-                    <span style="opacity: 0.7;">(${updateDate})</span>
+                    <span style="opacity: 0.7;">(${displayDate})</span>
                 </div>`;
         } else {
             statusDiv.innerHTML = `
                 <div style="display: flex; align-items: center; gap: 6px; color: #ef4444; font-size: 0.75rem;">
                     <span style="font-weight: 700;">● Actualización pendiente</span>
-                    <span style="opacity: 0.7;">(Carga: ${updateDate})</span>
+                    <span style="opacity: 0.7;">(Carga: ${displayDate})</span>
                 </div>`;
         }
     }
