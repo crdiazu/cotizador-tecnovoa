@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Productos IT - TECNOVOA</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <!-- Custom CSS with cache buster -->
+    <link rel="stylesheet" href="css/style.css?v=6">
+</head>
+<body>
+    <div class="app-container" style="grid-template-columns: 280px 1fr;">
+        <!-- Sidebar / Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-header">
+                    <div class="logos" style="margin-bottom: 0.5rem;">
+                        <img src="img/logos_500x500_blancas/Brother.jpeg" alt="Brother" style="max-height: 48px; width: auto; object-fit: contain;" id="sidebarLogo">
+                    </div>
+                    <p id="sidebarTitle">Línea Especial Brother</p>
+                </div>
+
+                <div class="search-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="searchInput" placeholder="Buscar por modelo o marca...">
+                </div>
+
+                <nav class="categories">
+                    <h3>Categorías</h3>
+                    <ul id="categoryList">
+                        <li><button class="cat-btn active" data-cat="Todos">Todos los Productos</button></li>
+                        <!-- Las categorías se inyectan dinámicamente -->
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+
+                <div id="updateStatus">
+                    <p class="loading-text">Verificando datos...</p>
+                </div>
+            </div>
+
+            <!-- Left sidebar collapse toggle -->
+            <button class="sidebar-collapse-btn" id="toggleLeftSidebar" title="Colapsar panel">
+                <svg id="leftToggleIcon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <h1 id="currentCategoryTitle">Todos los Productos</h1>
+                <div class="header-actions">
+                    <!-- Exchange rate display (read-only, from J1 of spreadsheet) -->
+                    <div class="exchange-rate-chip" id="exchangeRateChip" title="Tipo de cambio referencial">
+                        <span class="er-label">USD</span>
+                        <span class="er-eq">=</span>
+                        <span class="er-value" id="exchangeRateDisplay">...</span>
+                        <span class="er-unit">CLP</span>
+                    </div>
+                    <span id="productCount">Cargando...</span>
+                    <!-- Currency toggle -->
+                    <div class="currency-toggle" id="currencyToggle">
+                        <button class="curr-btn active" id="currUsdBtn" title="Precios en dólares">USD $</button>
+                        <button class="curr-btn" id="currClpBtn" title="Precios en pesos chilenos">CLP $</button>
+                    </div>
+                    <!-- View toggle -->
+                    <div class="view-toggle" id="viewToggle">
+                        <button class="view-btn active" id="viewGridBtn" title="Vista cuadrícula">⊞</button>
+                        <button class="view-btn" id="viewListBtn" title="Vista lista">☰</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Brand Filter Bar -->
+            <div class="brand-filter-bar" id="brandFilterBar">
+                <button class="brand-pill active" data-brand="Todos">Todas las Marcas</button>
+                <!-- Las marcas se inyectan dinámicamente -->
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Los productos se inyectan dinámicamente -->
+                <div class="loading">Cargando catálogo de productos...</div>
+            </div>
+        </main>
+    </div>
+
+    <!-- PDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/brother.js"></script>
+
+</body>
+</html>

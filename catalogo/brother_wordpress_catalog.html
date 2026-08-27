@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Industrial Brother - TECNOVOA</title>
+    <!-- Google Fonts (Inter + JetBrains Mono) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body style="margin: 0; background-color: #0f172a; padding: 2rem 1rem; font-family: 'Inter', sans-serif;">
+
+    <!-- ========================================== -->
+    <!-- INICIO DEL BLOQUE EMBEBIBLE PARA WORDPRESS -->
+    <!-- ========================================== -->
+    <!-- Copia todo el contenido dentro de este div (.brother-wp-container) y pégalo en un bloque "HTML Personalizado" en WordPress -->
+    
+    <div class="brother-wp-container">
+        
+        <!-- FRanja DE ADVERTENCIA INDUSTRIAL (DIAGONAL STRIPES) -->
+        <div class="brother-wp-warning-strip"></div>
+        
+        <!-- ESTILOS COMPLETAMENTE ACOTADOS A LA CLASE DE ENTRADA (.brother-wp-container) -->
+        <style>
+            .brother-wp-container {
+                --ind-yellow: #f59e0b; /* Amarillo Seguridad/Industrial */
+                --ind-yellow-hover: #d97706;
+                --br-blue: #0050A0; /* Azul Corporativo Brother */
+                --dark-steel: #0f172a; /* Fondo principal industrial */
+                --card-grey: #1e293b; /* Gris de tarjeta */
+                --border-steel: #334155; /* Bordes */
+                --text-light: #f8fafc;
+                --text-muted: #94a3b8;
+                --success-green: #10b981;
+                
+                font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                color: var(--text-light);
+                background-color: var(--dark-steel);
+                border-radius: 0 0 16px 16px; /* Ajustado para la franja superior */
+                border: 2px solid var(--border-steel);
+                border-top: none;
+                padding: 2.5rem 2rem 2rem 2rem;
+                box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+                max-width: 1200px;
+                margin: 0 auto;
+                box-sizing: border-box;
+                position: relative;
+            }
+
+            .brother-wp-warning-strip {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background: repeating-linear-gradient(
+                    -45deg,
+                    #eab308,
+                    #eab308 10px,
+                    #000000 10px,
+                    #000000 20px
+                );
+                border-radius: 12px 12px 0 0;
+                border: 2px solid var(--border-steel);
+                border-bottom: none;
+                margin: -2px -2px 0 -2px; /* Alineación perfecta con el borde principal */
+            }
+
+            .brother-wp-container * {
+                box-sizing: border-box;
+                transition: all 0.2s ease-in-out;
+            }
+
+            /* --- HEADER INDUSTRIAL --- */
+            .brother-wp-header {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1.5rem;
+                border-bottom: 2px solid var(--border-steel);
+                padding-bottom: 1.5rem;
+                margin-bottom: 2rem;
+            }
+
+            .brother-wp-brand {
+                display: flex;
+                align-items: center;
+                gap: 1.25rem;
+            }
+
+            .brother-wp-logo-badge {
+                background: var(--br-blue);
+                color: #ffffff;
+                font-weight: 800;
+                font-size: 1.4rem;
+                padding: 8px 18px;
+                border-radius: 6px;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                display: inline-flex;
+                align-items: center;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 4px 12px rgba(0, 80, 160, 0.3);
+            }
+
+            .brother-wp-brand-text h1 {
+                font-size: 1.6rem;
+                font-weight: 800;
+                color: #ffffff;
+                margin: 0 0 4px 0;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .brother-wp-brand-text p {
+                font-size: 0.85rem;
+                color: var(--text-muted);
+                margin: 0;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .brother-wp-brand-text p::before {
+                content: "●";
+                color: var(--ind-yellow);
+                font-size: 0.75rem;
+                animation: wpBlink 1.5s infinite;
+            }
+
+            @keyframes wpBlink {
+                0%, 100% { opacity: 0.3; }
+                50% { opacity: 1; }
+            }
+
+            /* --- CONTROLES: BUSCADOR Y TABS --- */
+            .brother-wp-controls {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1.25rem;
+                margin-bottom: 2rem;
+            }
+
+            .brother-wp-tabs {
+                display: flex;
+                gap: 0.6rem;
+                flex-wrap: wrap;
+            }
+
+            .brother-wp-tab-btn {
+                background: rgba(51, 65, 85, 0.3);
+                border: 1px solid var(--border-steel);
+                color: var(--text-muted);
+                padding: 10px 20px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                border-radius: 6px;
+                cursor: pointer;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .brother-wp-tab-btn:hover {
+                color: #ffffff;
+                background: rgba(51, 65, 85, 0.6);
+                border-color: var(--text-muted);
+            }
+
+            .brother-wp-tab-btn.active {
+                background: var(--ind-yellow);
+                color: #000000;
+                border-color: var(--ind-yellow);
+                box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
+            }
+
+            .brother-wp-search {
+                position: relative;
+                min-width: 280px;
+                flex-grow: 1;
+                max-width: 400px;
+            }
+
+            .brother-wp-search input {
+                width: 100%;
+                padding: 12px 16px 12px 42px;
+                border: 2px solid var(--border-steel);
+                background-color: rgba(15, 23, 42, 0.6);
+                color: #ffffff;
+                border-radius: 6px;
+                font-size: 0.85rem;
+                outline: none;
+            }
+
+            .brother-wp-search input:focus {
+                border-color: var(--ind-yellow);
+                box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+                background-color: rgba(15, 23, 42, 0.9);
+            }
+
+            .brother-wp-search-icon {
+                position: absolute;
+                left: 14px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--text-muted);
+                pointer-events: none;
+            }
+
+            /* --- BOTÓN COMPARATIVO RUGOSO --- */
+            .brother-wp-header-action .wp-compare-btn {
+                background: rgba(245, 158, 11, 0.08);
+                color: var(--ind-yellow);
+                border: 2px solid rgba(245, 158, 11, 0.3);
+                padding: 10px 22px;
+                font-size: 0.8rem;
+                font-weight: 700;
+                border-radius: 6px;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .brother-wp-header-action .wp-compare-btn:hover {
+                background: var(--ind-yellow);
+                color: #000000;
+                border-color: var(--ind-yellow);
+                box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+            }
+
+            /* --- PRODUCT GRID --- */
+            .brother-wp-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+                gap: 1.5rem;
+                margin-bottom: 2.5rem;
+            }
+
+            .brother-wp-card {
+                background: var(--card-grey);
+                border: 2px solid var(--border-steel);
+                border-radius: 8px;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+                position: relative;
+            }
+
+            .brother-wp-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 16px 28px rgba(0, 0, 0, 0.35);
+                border-color: var(--ind-yellow);
+            }
+
+            .brother-wp-card-img-container {
+                height: 180px;
+                background-color: #ffffff;
+                padding: 1.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                border-bottom: 2px solid var(--border-steel);
+            }
+
+            /* Simular look industrial de grilla de fondo en imagen */
+            .brother-wp-card-img-container::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background-image: radial-gradient(rgba(0, 80, 160, 0.05) 1.5px, transparent 1.5px);
+                background-size: 12px 12px;
+                pointer-events: none;
+            }
+
+            .brother-wp-card-svg-placeholder {
+                width: 90px;
+                height: 90px;
+                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            }
+
+            .brother-wp-card-tag {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                font-size: 0.65rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                padding: 4px 8px;
+                border-radius: 4px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            /* Colores de etiquetas industriales */
+            .tag-rotuladoras {
+                background-color: var(--ind-yellow);
+                color: #000000;
+                border-color: var(--ind-yellow) !important;
+            }
+
+            .tag-cintas {
+                background-color: var(--br-blue);
+                color: #ffffff;
+            }
+
+            .tag-tubos {
+                background-color: #ff5722;
+                color: #ffffff;
+            }
+
+            .brother-wp-card-body {
+                padding: 1.25rem;
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+            }
+
+            .brother-wp-card-title {
+                font-size: 0.95rem;
+                font-weight: 700;
+                color: #ffffff;
+                margin: 0 0 8px 0;
+                line-height: 1.4;
+                height: 2.7rem;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+
+            .brother-wp-card-pn {
+                font-family: 'JetBrains Mono', monospace;
+                font-weight: 700;
+                font-size: 0.75rem;
+                background: #0f172a;
+                color: #38bdf8;
+                padding: 3px 8px;
+                border-radius: 4px;
+                align-self: flex-start;
+                margin-bottom: 1rem;
+                border: 1px solid rgba(56, 189, 248, 0.2);
+            }
+
+            /* --- FICHA TÉCNICA (CONTROL PANEL LOOK) --- */
+            .brother-wp-card-specs {
+                list-style: none;
+                margin: 0 0 1.25rem 0;
+                padding: 0.75rem 0.5rem;
+                font-size: 0.75rem;
+                color: var(--text-muted);
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                border-top: 1px dashed var(--border-steel);
+                border-bottom: 1px dashed var(--border-steel);
+                background-color: rgba(15, 23, 42, 0.3);
+                border-radius: 4px;
+            }
+
+            .brother-wp-card-specs li {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-family: 'Inter', sans-serif;
+            }
+
+            .brother-wp-card-footer {
+                margin-top: auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 0.5rem;
+            }
+
+            .brother-wp-card-price-container {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .brother-wp-card-price-label {
+                font-size: 0.6rem;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                font-weight: 700;
+            }
+
+            .brother-wp-card-price {
+                font-size: 1.15rem;
+                font-weight: 800;
+                color: var(--ind-yellow);
+                font-family: 'JetBrains Mono', monospace;
+            }
+
+            /* Botón de WhatsApp robusto / botón de máquina */
+            .brother-wp-whatsapp-btn {
+                background-color: #25d366;
+                color: #ffffff;
+                border: 2px solid rgba(255, 255, 255, 0.1);
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            .brother-wp-whatsapp-btn:hover {
+                background-color: #128c7e;
+                transform: scale(1.1) rotate(5deg);
+                box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+            }
+
+            /* --- SECCIÓN COMPARATIVA BLUEPRINT --- */
+            .brother-wp-compare-section {
+                display: none;
+                background: #1e293b;
+                border: 2px solid var(--border-steel);
+                border-radius: 8px;
+                padding: 1.5rem;
+                margin-bottom: 2.5rem;
+                box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+                position: relative;
+            }
+
+            .brother-wp-compare-section.active {
+                display: block;
+                animation: wpSlideDown 0.3s ease-out;
+            }
+
+            /* Franja de advertencia pequeña arriba de la sección comparativa */
+            .brother-wp-compare-section::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: repeating-linear-gradient(
+                    -45deg,
+                    #eab308,
+                    #eab308 5px,
+                    #000000 5px,
+                    #000000 10px
+                );
+            }
+
+            .brother-wp-compare-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 2px solid var(--border-steel);
+                padding-bottom: 1rem;
+                margin-bottom: 1.25rem;
+                margin-top: 4px;
+            }
+
+            .brother-wp-compare-header h2 {
+                font-size: 1.2rem;
+                font-weight: 800;
+                margin: 0;
+                color: #ffffff;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .brother-wp-compare-close {
+                background: none;
+                border: none;
+                color: var(--text-muted);
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            
+            .brother-wp-compare-close:hover {
+                color: var(--ind-yellow);
+            }
+
+            .brother-wp-table-responsive {
+                overflow-x: auto;
+                border-radius: 6px;
+                border: 2px solid var(--border-steel);
+            }
+
+            .brother-wp-compare-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.8rem;
+                text-align: left;
+                min-width: 900px;
+            }
+
+            .brother-wp-compare-table th {
+                background: #0f172a;
+                color: var(--ind-yellow);
+                font-weight: 700;
+                padding: 12px 14px;
+                border-bottom: 2px solid var(--border-steel);
+                text-transform: uppercase;
+                font-size: 0.72rem;
+                letter-spacing: 0.5px;
+            }
+
+            .brother-wp-compare-table td {
+                padding: 12px 14px;
+                border-bottom: 1px solid var(--border-steel);
+                color: var(--text-light);
+            }
+
+            .brother-wp-compare-table tr:hover td {
+                background: rgba(245, 158, 11, 0.06);
+                color: #ffffff;
+            }
+
+            .brother-wp-compare-table tr:nth-child(even) td {
+                background: rgba(15, 23, 42, 0.2);
+            }
+
+            .brother-wp-compare-table td.col-model {
+                color: #38bdf8;
+                font-weight: 700;
+                font-family: 'JetBrains Mono', monospace;
+            }
+
+            .brother-wp-compare-table td strong {
+                color: var(--ind-yellow);
+            }
+
+            /* --- NO RESULTS MESSAGE --- */
+            .brother-wp-no-results {
+                display: none;
+                text-align: center;
+                padding: 3.5rem;
+                color: var(--text-muted);
+                border: 2px dashed var(--border-steel);
+                border-radius: 8px;
+                background-color: rgba(15, 23, 42, 0.3);
+            }
+
+            .brother-wp-no-results h3 {
+                color: #ffffff;
+                margin-top: 0;
+            }
+
+            /* --- RESPONSIVIDAD --- */
+            @media (max-width: 640px) {
+                .brother-wp-container {
+                    padding: 1.5rem 1rem;
+                }
+                .brother-wp-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+                .brother-wp-controls {
+                    flex-direction: column;
+                    align-items: stretch;
+                }
+                .brother-wp-search {
+                    max-width: none;
+                }
+            }
+        </style>
+
+        <!-- ESTRUCTURA HTML -->
+        
+        <!-- CABECERA -->
+        <header class="brother-wp-header">
+            <div class="brother-wp-brand">
+                <div class="brother-wp-logo-badge">Brother</div>
+                <div class="brother-wp-brand-text">
+                    <h1>Sistemas de Etiquetado</h1>
+                    <p>Fichas técnicas y cotización instantánea de suministros</p>
+                </div>
+            </div>
+            <div class="brother-wp-header-action">
+                <button type="button" class="wp-compare-btn" id="wpCompareBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    Comparador Técnico
+                </button>
+            </div>
+        </header>
+
+        <!-- SECCIÓN COMPARATIVA BLUEPRINT -->
+        <section class="brother-wp-compare-section" id="wpCompareSection">
+            <div class="brother-wp-compare-header">
+                <h2>Especificaciones Técnicas por Modelo</h2>
+                <button type="button" class="brother-wp-compare-close" id="wpCompareClose">&times;</button>
+            </div>
+            <div class="brother-wp-table-responsive">
+                <table class="brother-wp-compare-table">
+                    <thead>
+                        <tr>
+                            <th class="col-model">Modelo</th>
+                            <th>Uso Recomendado</th>
+                            <th>Ancho Máx. Cinta</th>
+                            <th>Velocidad Impresión</th>
+                            <th>Cortador</th>
+                            <th>Alimentación Incluida</th>
+                            <th>Conexión PC/Móvil</th>
+                            <th>Capacidad de Impresión</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-model">PT-H110VP</td>
+                            <td>Oficina y hogar</td>
+                            <td><strong>12 mm</strong> (1/2")</td>
+                            <td>20 mm/s</td>
+                            <td>Manual</td>
+                            <td>Adaptador AC / Pilas AAA</td>
+                            <td>No</td>
+                            <td>Hasta 2 líneas / 250+ símbolos</td>
+                        </tr>
+                        <tr>
+                            <td class="col-model">PT-E110VP</td>
+                            <td>Electricistas básico</td>
+                            <td><strong>12 mm</strong> (1/2")</td>
+                            <td>20 mm/s</td>
+                            <td>Manual</td>
+                            <td>Incluye Adaptador AC y Maletín</td>
+                            <td>No</td>
+                            <td>Hasta 2 líneas / 200+ símbolos</td>
+                        </tr>
+                        <tr>
+                            <td class="col-model">PT-E300VP</td>
+                            <td>Industrial medio</td>
+                            <td><strong>18 mm</strong> (3/4")</td>
+                            <td>20 mm/s</td>
+                            <td>Manual (Corte/Pausa)</td>
+                            <td>Batería Li-ion / AC / Maletín</td>
+                            <td>No</td>
+                            <td>Hasta 5 líneas / 384 símb / Barcodes</td>
+                        </tr>
+                        <tr>
+                            <td class="col-model">PT-E550WVP</td>
+                            <td>Industrial avanzado</td>
+                            <td><strong>24 mm</strong> (1")</td>
+                            <td>30 mm/s</td>
+                            <td>Automático (Semicorte)</td>
+                            <td>Batería Li-ion / AC / Maletín</td>
+                            <td>USB & Wi-Fi (iPrint)</td>
+                            <td>Hasta 7 líneas / 384 símb / Barcodes</td>
+                        </tr>
+                        <tr>
+                            <td class="col-model">PT-P900W</td>
+                            <td>Escritorio e Industrial</td>
+                            <td><strong>36 mm</strong> (1.5")</td>
+                            <td>60 mm/s</td>
+                            <td>Automático (Semicorte)</td>
+                            <td>Adaptador AC</td>
+                            <td>USB & Wi-Fi (P-touch Editor)</td>
+                            <td>7+ líneas / Conexión DB / 360 dpi</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- FILTROS Y CONTROLES -->
+        <div class="brother-wp-controls">
+            <div class="brother-wp-tabs">
+                <button type="button" class="brother-wp-tab-btn active" data-filter="Todos">Todos</button>
+                <button type="button" class="brother-wp-tab-btn" data-filter="Rotuladoras">Rotuladoras</button>
+                <button type="button" class="brother-wp-tab-btn" data-filter="Cintas & Suministros">Cintas & Tubos</button>
+            </div>
+            
+            <div class="brother-wp-search">
+                <svg class="brother-wp-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="wpSearchInput" placeholder="Buscar modelo o P/N...">
+            </div>
+        </div>
+
+        <!-- GRID DE PRODUCTOS -->
+        <div class="brother-wp-grid" id="wpProductsGrid">
+            <!-- Los productos se inyectan dinámicamente -->
+        </div>
+
+        <!-- MENSAJE SIN RESULTADOS -->
+        <div class="brother-wp-no-results" id="wpNoResults">
+            <h3>No se encontraron productos</h3>
+            <p>Prueba buscando con otro término o selecciona otra categoría.</p>
+        </div>
+        
+    </div>
+
+    <!-- SCRIPT DE LÓGICA E INTEGRACIÓN -->
+    <script>
+        (function() {
+            // BASE DE DATOS DE PRODUCTOS BROTHER (HARDCODED PARA WORDPRESS EMBED)
+            const products = [
+                {
+                    pn: "PT-H110VP",
+                    name: "Rotuladora Portátil Brother PT-H110VP",
+                    category: "Rotuladoras",
+                    price: "USD$ 45,00",
+                    type: "labeler",
+                    classTag: "tag-rotuladoras",
+                    specs: [
+                        "⚡ Velocidad: 20 mm/seg",
+                        "📏 Ancho máximo: 12 mm",
+                        "✂️ Cortador: Manual",
+                        "🔢 Símbolos: 250+ integrados"
+                    ]
+                },
+                {
+                    pn: "PT-E110VP",
+                    name: "Rotuladora Industrial Brother PT-E110VP",
+                    category: "Rotuladoras",
+                    price: "USD$ 65,00",
+                    type: "labeler",
+                    classTag: "tag-rotuladoras",
+                    specs: [
+                        "⚡ Velocidad: 20 mm/seg",
+                        "📏 Ancho máximo: 12 mm",
+                        "💼 Incluye: Maletín y Adaptador CA",
+                        "🔢 Símbolos: 200+ eléctricos y datacom"
+                    ]
+                },
+                {
+                    pn: "PT-E300VP",
+                    name: "Rotuladora Industrial Brother PT-E300VP (Maletín + Batería)",
+                    category: "Rotuladoras",
+                    price: "USD$ 145,00",
+                    type: "labeler",
+                    classTag: "tag-rotuladoras",
+                    specs: [
+                        "⚡ Velocidad: 20 mm/seg",
+                        "📏 Ancho máximo: 18 mm",
+                        "🔋 Alimentación: Batería Li-ion y Adaptador CA",
+                        "🔥 Compatibilidad: Tubo Termocontraíble HSe"
+                    ]
+                },
+                {
+                    pn: "PT-E550WVP",
+                    name: "Rotuladora Industrial Brother PT-E550WVP WiFi USB",
+                    category: "Rotuladoras",
+                    price: "USD$ 270,00",
+                    type: "labeler",
+                    classTag: "tag-rotuladoras",
+                    specs: [
+                        "⚡ Velocidad: 30 mm/seg",
+                        "📏 Ancho máximo: 24 mm",
+                        "🌐 Conexión: USB y WiFi para PC/Móvil",
+                        "✂️ Cortador: Automático con semicorte"
+                    ]
+                },
+                {
+                    pn: "PT-P900W",
+                    name: "Rotuladora Industrial de Escritorio Brother PT-P900W WiFi",
+                    category: "Rotuladoras",
+                    price: "USD$ 480,00",
+                    type: "labeler",
+                    classTag: "tag-rotuladoras",
+                    specs: [
+                        "⚡ Velocidad: 60 mm/seg",
+                        "📏 Ancho máximo: 36 mm (360 dpi)",
+                        "🌐 Conexión: USB y WiFi (Batería Opcional)",
+                        "✂️ Cortador: Automático con semicorte"
+                    ]
+                },
+                {
+                    pn: "TZE-211",
+                    name: "Cinta Brother TZe-211 Negro/Blanco 6mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 18,00",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 6 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🏷️ Tipo: Laminada Estándar",
+                        "🛡️ Resistencia: Agua, Sol, Abrasión"
+                    ]
+                },
+                {
+                    pn: "TZE-221",
+                    name: "Cinta Brother TZe-221 Negro/Blanco 9mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 19,50",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 9 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🏷️ Tipo: Laminada Estándar",
+                        "🛡️ Resistencia: Agua, Sol, Abrasión"
+                    ]
+                },
+                {
+                    pn: "TZE-231",
+                    name: "Cinta Brother TZe-231 Negro/Blanco 12mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 22,00",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 12 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🏷️ Tipo: Laminada Estándar",
+                        "🛡️ Resistencia: Agua, Sol, Abrasión"
+                    ]
+                },
+                {
+                    pn: "TZE-241",
+                    name: "Cinta Brother TZe-241 Negro/Blanco 18mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 26,00",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 18 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🏷️ Tipo: Laminada Estándar",
+                        "🛡️ Resistencia: Agua, Sol, Abrasión"
+                    ]
+                },
+                {
+                    pn: "TZE-251",
+                    name: "Cinta Brother TZe-251 Negro/Blanco 24mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 32,00",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 24 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🏷️ Tipo: Laminada Estándar",
+                        "🛡️ Resistencia: Agua, Sol, Abrasión"
+                    ]
+                },
+                {
+                    pn: "TZE-621",
+                    name: "Cinta Brother TZe-621 Negro/Amarillo 9mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 21,00",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 9 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Amarillo",
+                        "🏷️ Tipo: Laminada Estándar",
+                        "🛡️ Resistencia: Alta Visibilidad"
+                    ]
+                },
+                {
+                    pn: "TZE-631",
+                    name: "Cinta Brother TZe-631 Negro/Amarillo 12mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 23,00",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 12 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Amarillo",
+                        "🏷️ Tipo: Laminada Estándar",
+                        "🛡️ Resistencia: Alta Visibilidad"
+                    ]
+                },
+                {
+                    pn: "TZE-641",
+                    name: "Cinta Brother TZe-641 Negro/Amarillo 18mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 27,50",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 18 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Amarillo",
+                        "🏷️ Tipo: Laminada Estándar",
+                        "🛡️ Resistencia: Alta Visibilidad"
+                    ]
+                },
+                {
+                    pn: "TZE-S221",
+                    name: "Cinta Brother TZe-S221 Adhesivo Fuerte 9mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 24,00",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 9 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🏷️ Tipo: Adhesivo Fuerte",
+                        "🛡️ Resistencia: Superficies rugosas"
+                    ]
+                },
+                {
+                    pn: "TZE-S231",
+                    name: "Cinta Brother TZe-S231 Adhesivo Fuerte 12mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 26,50",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 12 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🏷️ Tipo: Adhesivo Fuerte",
+                        "🛡️ Resistencia: Superficies rugosas"
+                    ]
+                },
+                {
+                    pn: "TZE-FX231",
+                    name: "Cinta Brother TZe-FX231 Flexible ID 12mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 26,00",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 12 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🏷️ Tipo: Flexible ID para Cables",
+                        "🛡️ Resistencia: Envolturas estrechas"
+                    ]
+                },
+                {
+                    pn: "TZE-FX241",
+                    name: "Cinta Brother TZe-FX241 Flexible ID 18mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 29,50",
+                    type: "tape",
+                    classTag: "tag-cintas",
+                    specs: [
+                        "📏 Ancho: 18 mm (Largo: 8m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🏷️ Tipo: Flexible ID para Cables",
+                        "🛡️ Resistencia: Envolturas estrechas"
+                    ]
+                },
+                {
+                    pn: "HSE-211E",
+                    name: "Tubo Termocontraíble Brother HSe-211E 5.8mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 36,00",
+                    type: "tube",
+                    classTag: "tag-tubos",
+                    specs: [
+                        "📏 Ancho: 5.8 mm (Largo: 1.5m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🔌 Diámetro Cable: 18 a 22 AWG",
+                        "🔥 Coeficiente: Retráctil 2:1 con calor"
+                    ]
+                },
+                {
+                    pn: "HSE-221E",
+                    name: "Tubo Termocontraíble Brother HSe-221E 8.8mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 39,00",
+                    type: "tube",
+                    classTag: "tag-tubos",
+                    specs: [
+                        "📏 Ancho: 8.8 mm (Largo: 1.5m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🔌 Diámetro Cable: 12 a 18 AWG",
+                        "🔥 Coeficiente: Retráctil 2:1 con calor"
+                    ]
+                },
+                {
+                    pn: "HSE-231E",
+                    name: "Tubo Termocontraíble Brother HSe-231E 11.2mm",
+                    category: "Cintas & Suministros",
+                    price: "USD$ 42,00",
+                    type: "tube",
+                    classTag: "tag-tubos",
+                    specs: [
+                        "📏 Ancho: 11.2 mm (Largo: 1.5m)",
+                        "🎨 Color: Negro sobre Blanco",
+                        "🔌 Diámetro Cable: 2.1 a 7 AWG",
+                        "🔥 Coeficiente: Retráctil 2:1 con calor"
+                    ]
+                }
+            ];
+
+            // RENDERIZAR PRODUCTOS
+            const grid = document.getElementById('wpProductsGrid');
+            const noResults = document.getElementById('wpNoResults');
+            const search = document.getElementById('wpSearchInput');
+            const tabBtns = document.querySelectorAll('.brother-wp-tab-btn');
+            const compareBtn = document.getElementById('wpCompareBtn');
+            const compareClose = document.getElementById('wpCompareClose');
+            const compareSection = document.getElementById('wpCompareSection');
+            
+            let currentFilter = 'Todos';
+            let currentSearch = '';
+
+            function render() {
+                grid.innerHTML = '';
+                
+                const filtered = products.filter(p => {
+                    const matchCategory = currentFilter === 'Todos' || p.category === currentFilter;
+                    const matchSearch = p.name.toLowerCase().includes(currentSearch) || 
+                                        p.pn.toLowerCase().includes(currentSearch);
+                    return matchCategory && matchSearch;
+                });
+
+                if (filtered.length === 0) {
+                    noResults.style.display = 'block';
+                    grid.style.display = 'none';
+                } else {
+                    noResults.style.display = 'none';
+                    grid.style.display = 'grid';
+
+                    filtered.forEach(p => {
+                        const card = document.createElement('div');
+                        card.className = 'brother-wp-card';
+                        
+                        // Iconos vectoriales limpios
+                        let svgIcon = '';
+                        if (p.type === 'labeler') {
+                            // Rotuladora industrial amarilla/negra con teclado
+                            svgIcon = `<svg class="brother-wp-card-svg-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="4" y="2" width="16" height="20" rx="2" fill="#eab308" stroke="#000000" stroke-width="1.5"/><rect x="6" y="4" width="12" height="5" rx="1" fill="#0f172a"/><path d="M7 6h10" stroke="#38bdf8" stroke-width="1.5"/><rect x="6" y="11" width="12" height="9" rx="1" fill="#334155"/><circle cx="8" cy="13" r="0.8" fill="#ffffff"/><circle cx="12" cy="13" r="0.8" fill="#ffffff"/><circle cx="16" cy="13" r="0.8" fill="#ffffff"/><circle cx="8" cy="16" r="0.8" fill="#ffffff"/><circle cx="12" cy="16" r="0.8" fill="#ffffff"/><circle cx="16" cy="16" r="0.8" fill="#ffffff"/><circle cx="8" cy="19" r="0.8" fill="#ffffff"/><circle cx="12" cy="19" r="0.8" fill="#ffffff"/><circle cx="16" cy="19" r="0.8" fill="#ffffff"/><rect x="9" y="14.5" width="6" height="0.8" rx="0.4" fill="#ffffff"/></svg>`;
+                        } else if (p.type === 'tape') {
+                            // Cinta de cassette gris/azul
+                            svgIcon = `<svg class="brother-wp-card-svg-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="5" width="20" height="14" rx="2" fill="#334155" stroke="#475569" stroke-width="1.5"/><circle cx="7" cy="12" r="3" fill="#0f172a" stroke="#cbd5e1" stroke-width="1"/><circle cx="17" cy="12" r="3" fill="#0f172a" stroke="#cbd5e1" stroke-width="1"/><rect x="10" y="8" width="4" height="8" fill="#1e293b" stroke="#475569"/><path d="M4 12h16" stroke="#475569" stroke-dasharray="2,2"/></svg>`;
+                        } else {
+                            // Tubo termocontraíble naranja
+                            svgIcon = `<svg class="brother-wp-card-svg-placeholder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="5" y="2" width="14" height="20" rx="3" fill="#ff5722" stroke="#d84315" stroke-width="1.5"/><path d="M12 2v20M5 7h14M5 12h14M5 17h14" stroke="#ffffff" stroke-width="1" stroke-opacity="0.3"/><circle cx="12" cy="7" r="1.5" fill="#ffffff"/><circle cx="12" cy="17" r="1.5" fill="#ffffff"/></svg>`;
+                        }
+
+                        const waText = encodeURIComponent(`Hola TECNOVOA, me interesa cotizar el siguiente producto Brother:\n- Producto: ${p.name}\n- Part Number: ${p.pn}`);
+                        const waUrl = `https://wa.me/56984849276?text=${waText}`;
+
+                        card.innerHTML = `
+                            <div class="brother-wp-card-img-container">
+                                <span class="brother-wp-card-tag ${p.classTag}">${p.category}</span>
+                                ${svgIcon}
+                            </div>
+                            <div class="brother-wp-card-body">
+                                <h3 class="brother-wp-card-title">${p.name}</h3>
+                                <span class="brother-wp-card-pn">PN: ${p.pn}</span>
+                                <ul class="brother-wp-card-specs">
+                                    ${p.specs.map(s => `<li><span>${s}</span></li>`).join('')}
+                                </ul>
+                                <div class="brother-wp-card-footer">
+                                    <div class="brother-wp-card-price-container">
+                                        <span class="brother-wp-card-price-label">Precio Neto</span>
+                                        <span class="brother-wp-card-price">${p.price} <span style="font-size:0.6rem; color:var(--text-muted); font-weight:normal;">+IVA</span></span>
+                                    </div>
+                                    <a href="${waUrl}" target="_blank" class="brother-wp-whatsapp-btn" title="Consultar disponibilidad por WhatsApp">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79 1.043h.007c4.368 0 7.92-3.556 7.924-7.927a7.86 7.86 0 0 0-2.324-5.604zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.69-4.2a3.69 3.69 0 0 0-1.845-.335c-.272.012-.59.121-.9.23-.272.1-.5.23-.72.36a2.23 2.23 0 0 1-.9.36c-.454.12-.9.25-1.25.43-.35.18-.7.36-1 .61a6.7 6.7 0 0 0-1.35 1.5c-.2.32-.38.68-.45 1.04-.07.36.03.68.22.95.2.27.47.45.8.52a4.4 4.4 0 0 0 1.25.07c.27-.03.54-.12.82-.25.27-.12.52-.27.75-.45a7.3 7.3 0 0 0 1.2-1.2c.2-.27.35-.6.42-.95.07-.35-.02-.68-.22-.95-.12-.17-.3-.32-.52-.45"/></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                }
+            }
+
+            // LISTENERS
+            search.addEventListener('input', (e) => {
+                currentSearch = e.target.value.toLowerCase().trim();
+                render();
+            });
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilter = e.target.getAttribute('data-filter');
+                    render();
+                });
+            });
+
+            compareBtn.addEventListener('click', () => {
+                compareSection.classList.toggle('active');
+                if (compareSection.classList.contains('active')) {
+                    compareSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+
+            compareClose.addEventListener('click', () => {
+                compareSection.classList.remove('active');
+            });
+
+            // INICIALIZACIÓN
+            render();
+
+        })();
+    </script>
+    
+    <!-- ========================================== -->
+    <!-- FIN DEL BLOQUE EMBEBIBLE PARA WORDPRESS -->
+    <!-- ========================================== -->
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "cotizador-tecnovoa-functions",
+  "description": "Firebase Functions for Cotizador TECNOVOA — logs cotizaciones a Firestore",
+  "scripts": {
+    "deploy": "firebase deploy --only functions"
+  },
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^5.1.0"
+  },
+  "private": true
+}

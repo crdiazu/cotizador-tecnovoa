@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Productos IT - TECNOVOA</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS with cache buster -->
+    <link rel="stylesheet" href="css/style.css?v=6">
+</head>
+<body>
+    <!-- Pantalla de Acceso (Login Overlay) -->
+    <div id="loginOverlay" class="login-overlay hidden" style="display: none;">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logos" style="display: flex; justify-content: center; margin-bottom: 0.5rem;">
+                    <img src="img/tecnovoa_logo.png" alt="TECNOVOA" style="max-height: 48px; width: auto; object-fit: contain;">
+                </div>
+                <p>Catálogo B2B Privado</p>
+            </div>
+            <form id="loginForm" class="login-form" onsubmit="return false;">
+                <div>
+                    <label for="loginPassword" class="input-label">Contraseña de acceso</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+                        <button type="button" id="togglePassword" class="toggle-password-btn" title="Mostrar/Ocultar contraseña">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                        </button>
+                    </div>
+                </div>
+                <label class="remember-me-wrapper">
+                    <input type="checkbox" id="rememberMe">
+                    <span>Recordar acceso en este dispositivo</span>
+                </label>
+                <div id="loginError" class="login-error">Contraseña incorrecta. Por favor, intente de nuevo.</div>
+                <button type="submit" id="loginSubmitBtn" class="login-btn">Ingresar al Catálogo</button>
+            </form>
+            <div class="login-footer">
+                &copy; 2026 TECNOVOA SPA. Todos los derechos reservados.
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar / Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-top">
+                <div class="sidebar-header">
+                    <div class="logos" style="margin-bottom: 0.5rem;">
+                        <img src="img/tecnovoa_logo.png" alt="TECNOVOA" style="max-height: 48px; width: auto; object-fit: contain;" id="sidebarLogo">
+                    </div>
+                    <p id="sidebarTitle">Catálogo B2B Privado</p>
+                </div>
+
+                <div class="search-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="searchInput" placeholder="Buscar por modelo o marca...">
+                </div>
+
+                <nav class="categories">
+                    <h3>Categorías</h3>
+                    <ul id="categoryList">
+                        <li><button class="cat-btn active" data-cat="Todos">Todos los Productos</button></li>
+                        <!-- Las categorías se inyectan dinámicamente -->
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="sidebar-footer">
+
+                <div id="updateStatus">
+                    <p class="loading-text">Verificando datos...</p>
+                </div>
+            </div>
+
+            <!-- Left sidebar collapse toggle -->
+            <button class="sidebar-collapse-btn" id="toggleLeftSidebar" title="Colapsar panel">
+                <svg id="leftToggleIcon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <h1 id="currentCategoryTitle">Todos los Productos</h1>
+                <div class="header-actions">
+                    <!-- Exchange rate display (read-only, from J1 of spreadsheet) -->
+                    <div class="exchange-rate-chip" id="exchangeRateChip" title="Tipo de cambio referencial">
+                        <span class="er-label">USD</span>
+                        <span class="er-eq">=</span>
+                        <span class="er-value" id="exchangeRateDisplay">...</span>
+                        <span class="er-unit">CLP</span>
+                    </div>
+                    <span id="productCount">Cargando...</span>
+                    <!-- Currency toggle -->
+                    <div class="currency-toggle" id="currencyToggle">
+                        <button class="curr-btn active" id="currUsdBtn" title="Precios en dólares">USD $</button>
+                        <button class="curr-btn" id="currClpBtn" title="Precios en pesos chilenos">CLP $</button>
+                    </div>
+                    <!-- View toggle -->
+                    <div class="view-toggle" id="viewToggle">
+                        <button class="view-btn active" id="viewGridBtn" title="Vista cuadrícula">⊞</button>
+                        <button class="view-btn" id="viewListBtn" title="Vista lista">☰</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Brand Filter Bar -->
+            <div class="brand-filter-bar" id="brandFilterBar">
+                <button class="brand-pill active" data-brand="Todos">Todas las Marcas</button>
+                <!-- Las marcas se inyectan dinámicamente -->
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Los productos se inyectan dinámicamente -->
+                <div class="loading">Cargando catálogo de productos...</div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar (Pedido) -->
+        <aside class="order-sidebar" id="orderSidebar">
+            <!-- Right sidebar collapse toggle -->
+            <button class="order-collapse-btn" id="toggleRightSidebar" title="Colapsar panel">
+                <svg id="rightToggleIcon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <div class="order-sidebar-content">
+            <div class="order-header">
+                <h3>Mi Pedido Actual</h3>
+                <span id="cartCountBadge" class="badge">0</span>
+            </div>
+            
+            <div id="sideCartItems" class="side-cart-items">
+                <!-- Items resumidos -->
+                <p class="empty-msg">No hay productos seleccionados</p>
+            </div>
+
+            <div class="order-footer">
+                <div class="total-row">
+                    <span>Total:</span>
+                    <span id="sideCartTotal">USD$ 0,00</span>
+                </div>
+                <button id="sideViewFullBtn" class="primary-btn">🧮 Calcular Margen & Cotizar</button>
+            </div><!-- /order-footer -->
+            </div><!-- /order-sidebar-content -->
+        </aside>
+    </div>
+
+    <!-- Cart Modal (Calculadora de Cotizaciones) -->
+    <div id="cartModal" class="modal calc-modal">
+        <div class="modal-content calc-modal-content">
+            <div class="modal-header">
+                <h2 id="calcModalTitle">🧮 Calculadora de Cotización (USD)</h2>
+                <!-- Segmented Control for View Mode -->
+                <div class="view-mode-selector">
+                    <button type="button" id="viewModeCalcBtn" class="mode-btn active" data-mode="calc">🧮 Vista Costos & Márgenes (Interno)</button>
+                    <button type="button" id="viewModeClientBtn" class="mode-btn" data-mode="client">👁️ Vista Previa Cliente (Público)</button>
+                </div>
+                <button id="closeCart" class="close-btn">&times;</button>
+            </div>
+            
+            <!-- Barra de Controles Superiores -->
+            <div class="calc-controls-bar">
+                <div class="control-group client-hidden">
+                    <label for="globalMarginInput">Margen Global:</label>
+                    <div class="input-append">
+                        <input type="number" id="globalMarginInput" value="20" min="0" max="99" style="width: 70px;">
+                        <span>%</span>
+                        <button id="applyGlobalMarginBtn" class="control-btn">Aplicar</button>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="exchangeRateInput">Tipo Cambio:</label>
+                    <div class="input-append">
+                        <span>$</span>
+                        <input type="number" id="exchangeRateInput" value="940" style="width: 90px;">
+                        <span>CLP</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="currencySelector">Moneda:</label>
+                    <div class="input-append">
+                        <select id="currencySelector" style="background: transparent; border: none; color: #fff; font-size: 0.82rem; outline: none; cursor: pointer; padding: 4px 8px;">
+                            <option value="USD" style="background: #1e293b; color: #fff;" selected>USD</option>
+                            <option value="CLP" style="background: #1e293b; color: #fff;">CLP</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group toggles client-hidden">
+                    <label class="toggle-control">
+                        <input type="checkbox" id="toggleCostCol" checked>
+                        <span class="control-label">Ver Costo</span>
+                    </label>
+                    <label class="toggle-control">
+                        <input type="checkbox" id="toggleMarginCol" checked>
+                        <span class="control-label">Ver Margen</span>
+                    </label>
+                </div>
+
+                <div class="control-group search-add-group client-hidden" style="position: relative; flex-grow: 1;">
+                    <label for="calcSearchInput">Añadir Producto:</label>
+                    <input type="text" id="calcSearchInput" placeholder="Escribe P/N o nombre de producto..." style="width: 100%;">
+                    <div id="calcSearchDropdown" class="calc-search-dropdown"></div>
+                </div>
+            </div>
+
+            <!-- Distribución Widescreen: Tabla y Sidebar -->
+            <div class="calc-layout">
+                <!-- Tabla Principal -->
+                <div class="calc-table-wrapper">
+                    <table class="calc-table">
+                        <thead>
+                            <tr>
+                                <th class="col-index">#</th>
+                                <th class="col-qty" style="text-align: center;">Cant.</th>
+                                <th class="col-um" style="text-align: center;">U/M</th>
+                                <th class="col-pn">P/N</th>
+                                <th class="col-brand">Marca</th>
+                                <th class="col-desc">SKU / Detalle</th>
+                                <th class="col-cost-unit col-cost" id="thCostUnit" style="text-align: right;">Costo Unit. (USD)</th>
+                                <th class="col-cost-total col-cost" id="thCostTotal" style="text-align: right;">Costo Total (USD)</th>
+                                <th class="col-margin" style="text-align: center;">Margen %</th>
+                                <th class="col-price" id="thPvpUnit" style="text-align: right;">PVP Unit. (USD)</th>
+                                <th class="col-subtotal" id="thTotalVenta" style="text-align: right;">Total Venta (USD)</th>
+                                <th class="col-obs client-hidden">Obs</th>
+                                <th class="col-dispo">Disponibilidad</th>
+                                <th class="col-comments">Comentarios</th>
+                                <th class="col-actions"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="calcTableBody">
+                            <!-- Los ítems se inyectan dinámicamente -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="calc-tfoot-row tfoot-row-net">
+                                <td class="col-index"></td>
+                                <td class="col-qty" id="footTotalQty" style="text-align: center; font-weight: 700;">0</td>
+                                <td colspan="4" id="lblFootNet" style="text-align: right; font-weight: 700; color: #ffffff; padding-right: 15px !important;">Total neto USD</td>
+                                <td class="col-cost-unit col-cost"></td>
+                                <td class="col-cost-total col-cost" id="footTotalCost" style="text-align: right; font-weight: 700; color: #ffffff;">0,00</td>
+                                <td class="col-margin" id="footAvgMargin" style="text-align: center; font-weight: 700; color: #ffffff;">0,0%</td>
+                                <td class="col-price"></td>
+                                <td class="col-subtotal" id="footTotalNet" style="text-align: right; font-weight: 700; color: var(--success);">0,00</td>
+                                <td class="col-obs client-hidden"></td>
+                                <td class="col-dispo"></td>
+                                <td class="col-comments"></td>
+                                <td class="col-actions"></td>
+                            </tr>
+                            <tr class="calc-tfoot-row tfoot-row-iva">
+                                <td colspan="6" id="lblFootIva" style="text-align: right; font-weight: 600; color: var(--text-secondary); padding-right: 15px !important;">IVA (19%) USD</td>
+                                <td class="col-cost-unit col-cost"></td>
+                                <td class="col-cost-total col-cost"></td>
+                                <td class="col-margin"></td>
+                                <td class="col-price"></td>
+                                <td class="col-subtotal" id="footTotalIva" style="text-align: right; font-weight: 600; color: var(--text-secondary);">0,00</td>
+                                <td class="col-obs client-hidden"></td>
+                                <td class="col-dispo"></td>
+                                <td class="col-comments"></td>
+                                <td class="col-actions"></td>
+                            </tr>
+                            <tr class="calc-tfoot-row tfoot-row-gross">
+                                <td colspan="6" id="lblFootGross" style="text-align: right; font-weight: 700; color: #ffffff; padding-right: 15px !important;">Total USD</td>
+                                <td class="col-cost-unit col-cost"></td>
+                                <td class="col-cost-total col-cost"></td>
+                                <td class="col-margin"></td>
+                                <td class="col-price"></td>
+                                <td class="col-subtotal" id="footTotalGross" style="text-align: right; font-weight: 700; color: #ffffff; background: rgba(16, 185, 129, 0.25); border-radius: 4px; padding: 2px 6px;">0,00</td>
+                                <td class="col-obs client-hidden"></td>
+                                <td class="col-dispo"></td>
+                                <td class="col-comments"></td>
+                                <td class="col-actions"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <!-- Panel Lateral de Estadísticas y Cliente -->
+                <div class="calc-sidebar">
+                    <div class="sidebar-section client-hidden">
+                        <h3>Métricas de Venta</h3>
+                        <div class="stat-row">
+                            <span>Costo Total:</span>
+                            <strong id="statTotalCost">USD$ 0,00</strong>
+                        </div>
+                        <div class="stat-row">
+                            <span>Margen Promedio:</span>
+                            <strong id="statAvgMargin">0,0%</strong>
+                        </div>
+                        <div class="stat-row utility">
+                            <span>Utilidad Estimada:</span>
+                            <strong id="statTotalProfit">USD$ 0,00</strong>
+                        </div>
+                        <div class="stat-row commission" style="margin-top: 4px; border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 4px;">
+                            <span>Ganancia 30% (Socio):</span>
+                            <strong id="statCommission30" style="color: #60a5fa;">USD$ 0,00</strong>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-section client-hidden active-item-details" id="activeItemDetailsCard" style="background: rgba(30,41,59,0.4); border: 1px solid rgba(255,255,255,0.05); padding: 0.8rem; border-radius: 8px;">
+                        <h3>Ítem Seleccionado</h3>
+                        <div class="active-item-info">
+                            <h4 id="activeItemName" style="font-size: 0.78rem; font-weight: 600; color: #ffffff; margin-bottom: 0.4rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="Selecciona un ítem...">Selecciona un ítem...</h4>
+                            <div class="stat-row" style="font-size: 0.75rem; margin-bottom: 2px;">
+                                <span>P/N:</span>
+                                <strong id="activeItemPN" style="font-family: monospace;">-</strong>
+                            </div>
+                            <div class="stat-row" style="font-size: 0.75rem; margin-bottom: 2px;">
+                                <span>Stock Disponible:</span>
+                                <strong id="activeItemStock" style="color: var(--success);">-</strong>
+                            </div>
+                            <div class="stat-row" style="font-size: 0.75rem;">
+                                <span>Costo Actualizado:</span>
+                                <strong id="activeItemDate" style="color: #60a5fa;">-</strong>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="sidebar-section client-details-inputs">
+                        <h3>📋 Datos de la Cotización Proforma</h3>
+                        <div class="input-field">
+                            <label for="pdfClientName">Razón Social Cliente: <span style="color:#ef4444">*</span></label>
+                            <input type="text" id="pdfClientName" value="Cliente General" placeholder="Ej: Salmones Pacific Star S.A.">
+                        </div>
+                        <div class="input-field">
+                            <label for="pdfClientRut">RUT Cliente:</label>
+                            <input type="text" id="pdfClientRut" placeholder="Ej: 79.559.220-2">
+                        </div>
+                        <div class="input-field">
+                            <label for="pdfClientAddr">Dirección:</label>
+                            <input type="text" id="pdfClientAddr" placeholder="Ej: Av. Providencia 1234, Santiago">
+                        </div>
+                        <div class="input-field">
+                            <label for="pdfClientContact">Atención a:</label>
+                            <input type="text" id="pdfClientContact" placeholder="Ej: Pablo Montory">
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
+                            <div class="input-field">
+                                <label for="pdfValidityDays">Validez (días):</label>
+                                <input type="number" id="pdfValidityDays" value="7" min="1" max="90" style="text-align:center;">
+                            </div>
+                            <div class="input-field">
+                                <label for="pdfDelivery">Plazo entrega:</label>
+                                <input type="text" id="pdfDelivery" value="1 semana" placeholder="Ej: 1 semana">
+                            </div>
+                        </div>
+                        <div class="input-field">
+                            <label for="pdfPayment">Condición de Pago:</label>
+                            <input type="text" id="pdfPayment" value="Transferencia / Cheque a fecha" placeholder="Condición de pago">
+                        </div>
+                        <div class="input-field">
+                            <label for="pdfTerms">Términos y Condiciones (Editable):</label>
+                            <textarea id="pdfTerms" rows="6" style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; border-radius: 6px; padding: 8px 12px; font-size: 0.75rem; resize: vertical; font-family: sans-serif;"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-actions">
+                        <button id="sendOrderBtn" class="primary-btn block-btn">📄 Generar Cotización PDF</button>
+                        <button id="closeCartCalc" class="sec-btn block-btn">💾 Guardar y Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- T&C Modal -->
+    <div id="tycModal" class="modal" onclick="if(event.target===this)this.classList.remove('active')">
+        <div class="modal-content tyc-modal-content">
+            <div class="modal-header">
+                <h2>Términos y Condiciones</h2>
+                <button class="close-btn" onclick="document.getElementById('tycModal').classList.remove('active')">&times;</button>
+            </div>
+            <div class="tyc-body">
+                <h3>1. Precios</h3>
+                <p>Netos en CLP, sujetos a confirmación según tipo de cambio del día.</p>
+
+                <h3>2. Despacho</h3>
+                <p>Según stock y disponibilidad del fabricante. Confirmar disponibilidad antes de emitir Orden de Compra.</p>
+
+                <h3>3. Plazos de entrega</h3>
+                <p>Estimados, varían según disponibilidad de la marca.</p>
+
+                <h3>4. Garantía</h3>
+                <p>Rige garantía oficial del fabricante. TECNOVOA no otorga garantías adicionales.</p>
+
+                <h3>5. Devoluciones</h3>
+                <p>No se aceptan sin autorización previa por escrito.</p>
+
+                <h3>6. Vigencia</h3>
+                <p>15 días corridos desde su emisión.</p>
+
+                <h3>7. Naturaleza</h3>
+                <p>Esta es una cotización/proforma, no una factura ni compromiso de compra.</p>
+
+                <h3>8. Aceptación</h3>
+                <p>La emisión de la Orden de Compra (OC) implica aceptación de estos términos.</p>
+
+                <hr style="margin: 1rem 0; border: 0; border-top: 1px solid rgba(255,255,255,0.08);">
+
+                <h3>Contacto Comercial</h3>
+                <p>Para confirmar precios, stock o condiciones comerciales, contactar directamente a:<br>
+                <strong>Úrsula Zúñiga</strong> — Jefa de Ventas<br>
+                ursula@tecnovoa.cl · +56 9 8484 9276</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flyer Generator Modal -->
+    <div id="flyerModal" class="modal flyer-modal" onclick="if(event.target===this)this.classList.remove('active')">
+        <div class="modal-content flyer-modal-content">
+            <div class="modal-header">
+                <h2>📢 Diseñador de Flyer Promocional</h2>
+                <button class="close-btn" onclick="document.getElementById('flyerModal').classList.remove('active')">&times;</button>
+            </div>
+            
+            <div class="flyer-layout">
+                <!-- Left Panel: Canvas Live Preview -->
+                <div class="flyer-preview-panel">
+                    <canvas id="flyerCanvas" width="1080" height="1080"></canvas>
+                </div>
+                
+                <!-- Right Panel: Editor Form -->
+                <div class="flyer-editor-panel">
+                    <h3>Personalizar Contenido</h3>
+                    <form id="flyerForm" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 0.7rem;">
+                        <input type="hidden" id="flyerProductId">
+                        
+                        <div class="input-field-group" style="display: flex; gap: 0.5rem;">
+                            <div class="input-field" style="flex: 1;">
+                                <label for="flyerBrand">Marca:</label>
+                                <input type="text" id="flyerBrand" value="TECNOVOA">
+                            </div>
+                            <div class="input-field" style="flex: 1;">
+                                <label for="flyerId">ID Producto / P/N:</label>
+                                <input type="text" id="flyerId" placeholder="Ej: TV-LPT-001">
+                            </div>
+                        </div>
+
+                        <div class="input-field">
+                            <label for="flyerTitlePrincipal">Titular Principal:</label>
+                            <input type="text" id="flyerTitlePrincipal" value="LAPTOP">
+                        </div>
+                        
+                        <div class="input-field">
+                            <label for="flyerTitleSecundario">Titular Secundario:</label>
+                            <input type="text" id="flyerTitleSecundario" value="Alto Rendimiento">
+                        </div>
+                        
+                        <div class="specifications-group">
+                            <h4 style="font-size: 0.72rem; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; font-weight: 700;">Especificaciones Técnicas</h4>
+                            <div class="spec-row-inputs" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+                                <input type="text" id="flyerSpec1" placeholder="Ej: 🔋 Batería: 5000 mAh">
+                                <input type="text" id="flyerSpec2" placeholder="Ej: ⚡ Procesador: Octa Core">
+                                <input type="text" id="flyerSpec3" placeholder="Ej: 💾 Almacenamiento: 512 GB SSD">
+                                <input type="text" id="flyerSpec4" placeholder="Ej: 🧠 Memoria RAM: 16 GB DDR4">
+                            </div>
+                        </div>
+
+                        <div class="price-checkbox-group" style="display: flex; align-items: center; gap: 8px; margin: 4px 0;">
+                            <label class="toggle-control" style="font-size: 0.72rem; font-weight: 600; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 6px; user-select: none;">
+                                <input type="checkbox" id="flyerShowPrice" checked>
+                                <span>Mostrar Precio</span>
+                            </label>
+                            <input type="text" id="flyerPrice" placeholder="USD$ 0,00" style="padding: 6px 10px; font-size: 0.82rem; flex-grow: 1;">
+                        </div>
+
+                        <div class="input-field">
+                            <label for="flyerCta">Llamado a la Acción:</label>
+                            <input type="text" id="flyerCta" value="COMPRAR AHORA">
+                        </div>
+
+                        <div class="input-field-group" style="display: flex; gap: 0.5rem;">
+                            <div class="input-field" style="flex: 1;">
+                                <label for="flyerContactPhone">Teléfono:</label>
+                                <input type="text" id="flyerContactPhone" value="+56 9 4943 8288">
+                            </div>
+                            <div class="input-field" style="flex: 1;">
+                                <label for="flyerContactWeb">Sitio Web:</label>
+                                <input type="text" id="flyerContactWeb" value="www.tecnovoa.cl">
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="flyer-actions" style="margin-top: 1rem; display: flex; gap: 0.6rem;">
+                        <button id="downloadFlyerBtn" class="primary-btn block-btn" style="flex: 1; padding: 8px !important; font-size: 0.82rem !important;">💾 Descargar PNG</button>
+                        <button id="copyFlyerBtn" class="sec-btn block-btn" style="flex: 1; padding: 8px !important; font-size: 0.82rem !important;">📋 Copiar Imagen</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Edit Modal -->
+    <div id="productEditModal" class="modal edit-modal" onclick="if(event.target===this)this.classList.remove('active')">
+        <div class="modal-content edit-modal-content">
+            <div class="modal-header">
+                <h2>✏️ Editar Datos de Producto</h2>
+                <button class="close-btn" onclick="document.getElementById('productEditModal').classList.remove('active')">&times;</button>
+            </div>
+            <form id="productEditForm" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 0.8rem; padding-top: 0.5rem;">
+                <div class="input-field">
+                    <label for="editPn" style="font-weight: 600; font-size: 0.82rem; color: var(--text-secondary);">P/N (Part Number):</label>
+                    <input type="text" id="editPn" readonly style="background: rgba(0, 0, 0, 0.25); color: var(--text-secondary); cursor: not-allowed;">
+                </div>
+                <div class="input-field-group" style="display: flex; gap: 0.6rem;">
+                    <div class="input-field" style="flex: 1;">
+                        <label for="editBrand" style="font-weight: 600; font-size: 0.82rem; color: var(--text-secondary);">Marca:</label>
+                        <input type="text" id="editBrand" required>
+                    </div>
+                    <div class="input-field" style="flex: 1;">
+                        <label for="editCategory" style="font-weight: 600; font-size: 0.82rem; color: var(--text-secondary);">Categoría:</label>
+                        <input type="text" id="editCategory" required>
+                    </div>
+                </div>
+                <div class="input-field">
+                    <label for="editName" style="font-weight: 600; font-size: 0.82rem; color: var(--text-secondary);">Nombre del Producto:</label>
+                    <input type="text" id="editName" required>
+                </div>
+                <div class="input-field-group" style="display: flex; gap: 0.6rem;">
+                    <div class="input-field" style="flex: 1;">
+                        <label for="editStock" style="font-weight: 600; font-size: 0.82rem; color: var(--text-secondary);">Stock:</label>
+                        <input type="number" id="editStock" required min="0">
+                    </div>
+                    <div class="input-field" style="flex: 1;">
+                        <label for="editCostUsd" style="font-weight: 600; font-size: 0.82rem; color: var(--text-secondary);">Costo Unit. (USD):</label>
+                        <input type="number" id="editCostUsd" step="0.01" required min="0">
+                    </div>
+                </div>
+                <div class="input-field-group" style="display: flex; gap: 0.6rem;">
+                    <div class="input-field" style="flex: 1;">
+                        <label for="editMargin" style="font-weight: 600; font-size: 0.82rem; color: var(--text-secondary);">Margen (%):</label>
+                        <input type="number" id="editMargin" step="0.1" required min="-99" max="99">
+                    </div>
+                    <div class="input-field" style="flex: 1;">
+                        <label for="editPriceUsd" style="font-weight: 600; font-size: 0.82rem; color: var(--text-secondary);">PVP Unit. (USD):</label>
+                        <input type="number" id="editPriceUsd" step="0.01" required min="0">
+                    </div>
+                </div>
+                <div class="input-field">
+                    <label for="editImage" style="font-weight: 600; font-size: 0.82rem; color: var(--text-secondary);">URL de Imagen:</label>
+                    <input type="text" id="editImage">
+                </div>
+                <div class="edit-modal-actions" style="margin-top: 1rem; display: flex; gap: 0.6rem;">
+                    <button type="button" id="saveProductEditBtn" class="primary-btn block-btn" style="flex: 1; padding: 10px !important;">💾 Actualizar Producto</button>
+                    <button type="button" class="sec-btn block-btn" onclick="document.getElementById('productEditModal').classList.remove('active')" style="flex: 1; padding: 10px !important;">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- Firebase SDK (Compat version) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <!-- PDF Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/app.js?v=7"></script>
+
+</body>
+</html>

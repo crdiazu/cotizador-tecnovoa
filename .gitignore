@@ -1,0 +1,42 @@
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Obsidian
+.obsidian/
+
+# AI configs
+.ai/
+
+# Node
+node_modules/
+package-lock.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Firebase
+.firebase/
+*.log
+
+# Uploads (archivos temporales de usuario)
+.uploads/
+
+# Secrets
+.env
+.env.*
+credentials*
+
+# Temp
+*.tmp
+*.bak

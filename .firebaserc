@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "invtecnovoa-ddcc"
+  },
+  "targets": {
+    "invtecnovoa-ddcc": {
+      "hosting": {
+        "cotizador-tecnovoa": [
+          "cotizador-tecnovoa"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

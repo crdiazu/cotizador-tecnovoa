@@ -1,0 +1,39 @@
+{
+  "hosting": {
+    "target": "cotizador-tecnovoa",
+    "public": "catalogo",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/api/log",
+        "function": "logCotizacion"
+      },
+      {
+        "source": "/api/product-overrides",
+        "function": "getProductOverrides"
+      },
+      {
+        "source": "/api/update-product",
+        "function": "updateProductOverride"
+      }
+    ]
+  },
+  "functions": {
+    "source": "functions"
+  }
+}

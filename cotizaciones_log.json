@@ -1,0 +1,400 @@
+[
+    {
+        "document_no": "COT-2026-TEST1234",
+        "date": "11/06/2026 12:34:56",
+        "client_name": "Test Client LLC",
+        "client_contact": "Jane Doe",
+        "exchange_rate": 940.0,
+        "total_net_usd": "187.89",
+        "total_gross_usd": "223.59",
+        "average_margin": "20.0",
+        "total_profit_usd": "37.58",
+        "items": [
+            {
+                "pn": "PN1234",
+                "name": "Test Product A",
+                "qty": 1,
+                "cost": "150.31",
+                "margin": "20.0",
+                "price": "187.89",
+                "subtotal": "187.89"
+            }
+        ],
+        "estado": "emitida"
+    },
+    {
+        "document_no": "COT-2026-12205",
+        "date": "11-06-2026 4:15:12 a. m.",
+        "client_name": "Cliente General",
+        "client_contact": "",
+        "exchange_rate": 920,
+        "total_net_usd": "490.87",
+        "total_gross_usd": "584.13",
+        "average_margin": "20.8",
+        "total_profit_usd": "102.00",
+        "items": [
+            {
+                "pn": "Genérico",
+                "name": "CAT6 RJ45 cable 10m",
+                "qty": 16,
+                "cost": "17.22",
+                "margin": "18.9",
+                "price": "21.23",
+                "subtotal": "339.68"
+            },
+            {
+                "pn": "Genérico",
+                "name": "CAT6 RJ45 cable 1m",
+                "qty": 1,
+                "cost": "5.57",
+                "margin": "25.0",
+                "price": "7.42",
+                "subtotal": "7.42"
+            },
+            {
+                "pn": "7K2E3AA",
+                "name": "HP Poly Voyager 5200 Wireless headset",
+                "qty": 1,
+                "cost": "107.83",
+                "margin": "25.0",
+                "price": "143.77",
+                "subtotal": "143.77"
+            }
+        ],
+        "estado": "emitida"
+    },
+    {
+        "document_no": "COT-2026-14395",
+        "date": "11-06-2026 4:26:54 a. m.",
+        "client_name": "Cliente General",
+        "client_contact": "",
+        "exchange_rate": 920,
+        "total_net_usd": "1552.61",
+        "total_gross_usd": "1847.60",
+        "average_margin": "20.0",
+        "total_profit_usd": "310.52",
+        "items": [
+            {
+                "pn": "Genérico",
+                "name": "CAT6 RJ45 cable 10m",
+                "qty": 16,
+                "cost": "17.22",
+                "margin": "20.0",
+                "price": "21.52",
+                "subtotal": "344.35"
+            },
+            {
+                "pn": "Genérico",
+                "name": "CAT6 RJ45 cable 1m",
+                "qty": 1,
+                "cost": "5.57",
+                "margin": "20.0",
+                "price": "6.96",
+                "subtotal": "6.96"
+            },
+            {
+                "pn": "7K2E3AA",
+                "name": "HP Poly Voyager 5200 Wireless headset",
+                "qty": 1,
+                "cost": "107.83",
+                "margin": "20.0",
+                "price": "134.78",
+                "subtotal": "134.78"
+            },
+            {
+                "pn": "77Y86AA",
+                "name": "HP Poly Voyager Focus 2 Wireless headset w/o stand",
+                "qty": 6,
+                "cost": "133.91",
+                "margin": "20.0",
+                "price": "167.39",
+                "subtotal": "1004.35"
+            },
+            {
+                "pn": "Genérico",
+                "name": "Tempered glass protector for iPhone 16e",
+                "qty": 1,
+                "cost": "7.57",
+                "margin": "20.0",
+                "price": "9.46",
+                "subtotal": "9.46"
+            },
+            {
+                "pn": "80S11AA",
+                "name": "HP Poly Blackwire 3225 USB-C headset",
+                "qty": 1,
+                "cost": "42.17",
+                "margin": "20.0",
+                "price": "52.72",
+                "subtotal": "52.72"
+            }
+        ],
+        "estado": "emitida"
+    },
+    {
+        "document_no": "COT-2026-51415",
+        "date": "11-06-2026 4:32:31 a. m.",
+        "client_name": "Positron MED",
+        "client_contact": "Laura",
+        "exchange_rate": 920,
+        "total_net_usd": "1552.61",
+        "total_gross_usd": "1847.60",
+        "average_margin": "20.0",
+        "total_profit_usd": "310.52",
+        "items": [
+            {
+                "pn": "Genérico",
+                "name": "CAT6 RJ45 cable 10m",
+                "qty": 16,
+                "cost": "17.22",
+                "margin": "20.0",
+                "price": "21.52",
+                "subtotal": "344.35",
+                "um": "UND",
+                "brand": "",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "Genérico",
+                "name": "CAT6 RJ45 cable 1m",
+                "qty": 1,
+                "cost": "5.57",
+                "margin": "20.0",
+                "price": "6.96",
+                "subtotal": "6.96",
+                "um": "UND",
+                "brand": "",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "7K2E3AA",
+                "name": "HP Poly Voyager 5200 Wireless headset",
+                "qty": 1,
+                "cost": "107.83",
+                "margin": "20.0",
+                "price": "134.78",
+                "subtotal": "134.78",
+                "um": "UND",
+                "brand": "",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "77Y86AA",
+                "name": "HP Poly Voyager Focus 2 Wireless headset w/o stand",
+                "qty": 6,
+                "cost": "133.91",
+                "margin": "20.0",
+                "price": "167.39",
+                "subtotal": "1004.35",
+                "um": "UND",
+                "brand": "",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "Genérico",
+                "name": "Tempered glass protector for iPhone 16e",
+                "qty": 1,
+                "cost": "7.57",
+                "margin": "20.0",
+                "price": "9.46",
+                "subtotal": "9.46",
+                "um": "UND",
+                "brand": "",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "80S11AA",
+                "name": "HP Poly Blackwire 3225 USB-C headset",
+                "qty": 1,
+                "cost": "42.17",
+                "margin": "20.0",
+                "price": "52.72",
+                "subtotal": "52.72",
+                "um": "UND",
+                "brand": "",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            }
+        ],
+        "estado": "negociacion"
+    },
+    {
+        "document_no": "COT-2026-48723",
+        "date": "11-06-2026 4:42:28 a. m.",
+        "client_name": "Cliente General",
+        "client_contact": "",
+        "exchange_rate": 920,
+        "total_net_usd": "1676.99",
+        "total_gross_usd": "1995.61",
+        "average_margin": "25.0",
+        "total_profit_usd": "419.25",
+        "items": [
+            {
+                "pn": "Genérico",
+                "name": "CAT6 RJ45 cable 10m",
+                "qty": 16,
+                "cost": "17.22",
+                "margin": "25.0",
+                "price": "22.96",
+                "subtotal": "367.30",
+                "um": "UND",
+                "brand": "LK",
+                "dispo": "si ",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "Genérico",
+                "name": "CAT6 RJ45 cable 1m rojo",
+                "qty": 1,
+                "cost": "5.57",
+                "margin": "25.0",
+                "price": "7.42",
+                "subtotal": "7.42",
+                "um": "UND",
+                "brand": "LK",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "LK",
+                "comments": ""
+            },
+            {
+                "pn": "7K2E3AA",
+                "name": "HP Poly Voyager 5200 Wireless headset",
+                "qty": 1,
+                "cost": "107.83",
+                "margin": "25.0",
+                "price": "143.77",
+                "subtotal": "143.77",
+                "um": "UND",
+                "brand": "",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "77Y86AA",
+                "name": "HP Poly Voyager Focus 2 Wireless headset w/o stand",
+                "qty": 6,
+                "cost": "133.91",
+                "margin": "25.0",
+                "price": "178.55",
+                "subtotal": "1071.30",
+                "um": "UND",
+                "brand": "",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "Genérico",
+                "name": "Tempered glass protector for iPhone 16e",
+                "qty": 1,
+                "cost": "7.57",
+                "margin": "25.0",
+                "price": "10.09",
+                "subtotal": "10.09",
+                "um": "UND",
+                "brand": "",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "80S11AA",
+                "name": "HP Poly Blackwire 3225 USB-C headset",
+                "qty": 1,
+                "cost": "42.17",
+                "margin": "25.0",
+                "price": "56.23",
+                "subtotal": "56.23",
+                "um": "UND",
+                "brand": "",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "MHJA3AM/A",
+                "name": "Apple 20W USB-C Power Adapter",
+                "qty": 1,
+                "cost": "15.65",
+                "margin": "25.0",
+                "price": "20.87",
+                "subtotal": "20.87",
+                "um": "UND",
+                "brand": "Targus",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            }
+        ],
+        "estado": "cerrada"
+    },
+    {
+        "document_no": "COT-2026-62229",
+        "date": "07-07-2026 4:49:22 p. m.",
+        "client_name": "Cliente General",
+        "client_contact": "",
+        "exchange_rate": 940,
+        "total_net_usd": "807406.58",
+        "total_gross_usd": "960813.83",
+        "average_margin": "24.0",
+        "total_profit_usd": "193955.58",
+        "items": [
+            {
+                "pn": "DHI-NVR5216-EI2",
+                "name": "NVR Dahua 16CH DHI-NVR5216-EI2 WizSense",
+                "qty": 1,
+                "cost": "256294.00",
+                "margin": "25.0",
+                "price": "341725.33",
+                "subtotal": "341725.33",
+                "um": "UND",
+                "brand": "DAHUA",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "DH-IPC-HFW3649E-AS-IL",
+                "name": "Camara IP Bullet Dahua 6MP DH-IPC-HFW3649E-AS-IL WizSense Xinghan",
+                "qty": 1,
+                "cost": "126337.00",
+                "margin": "20.0",
+                "price": "157921.25",
+                "subtotal": "157921.25",
+                "um": "UND",
+                "brand": "DAHUA",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            },
+            {
+                "pn": "SKYHAWK 6TB",
+                "name": "DISCO DURO SEAGATE SKYHAWK 6TB",
+                "qty": 1,
+                "cost": "230820.00",
+                "margin": "25.0",
+                "price": "307760.00",
+                "subtotal": "307760.00",
+                "um": "UND",
+                "brand": "DAHUA",
+                "dispo": "INMEDIATA SALVO VENTA PREVIA",
+                "obs": "",
+                "comments": ""
+            }
+        ],
+        "estado": "emitida"
+    }
+]
