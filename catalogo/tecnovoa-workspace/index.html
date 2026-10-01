@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TECNOVOA | Catálogo Operacional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body
+  data-csv-path="../data/productos.csv"
+  data-logo-path="../img/tecnovoa_logo.png"
+  data-image-base="../"
+>
+  <canvas class="ambient-canvas" id="ambientCanvas" aria-hidden="true"></canvas>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <section class="brand-panel simple-title-box">
+        <img class="brand-logo" src="../img/tecnovoa_logo.png" alt="TECNOVOA">
+        <h1>Cotizador</h1>
+      </section>
+
+      <section class="sidebar-card">
+        <div class="section-title">
+          <span>Búsqueda rápida</span>
+          <strong id="catalogCount">0 productos</strong>
+        </div>
+        <label class="field">
+          <span>Buscar producto</span>
+          <input id="searchInput" type="search" placeholder="Marca, descripción, P/N">
+        </label>
+        <div class="section-subtitle">Categorías</div>
+        <div class="category-list" id="categoryChips"></div>
+      </section>
+
+      <section class="sidebar-card">
+        <div class="section-title">
+          <span>Resumen del catálogo</span>
+          <strong id="freshnessLabel">Cargando</strong>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-box">
+            <small>Actualización</small>
+            <strong id="lastUpdate">-</strong>
+          </div>
+          <div class="stat-box">
+            <small>Categorías</small>
+            <strong id="categoryCount">0</strong>
+          </div>
+          <div class="stat-box">
+            <small>Visibles</small>
+            <strong id="visibleCount">0</strong>
+          </div>
+          <div class="stat-box">
+            <small>Stock visible</small>
+            <strong id="stockCount">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="sidebar-card">
+        <div class="section-title">
+          <span>Soporte operativo</span>
+          <strong>Directo</strong>
+        </div>
+        <div class="support-list">
+          <div>
+            <small>Flujo recomendado</small>
+            <strong>Buscar, agregar, validar y cotizar.</strong>
+          </div>
+          <div>
+            <small>Contacto interno</small>
+            <strong>Ventas TECNOVOA / Mesa comercial</strong>
+          </div>
+          <div>
+            <small>Observación</small>
+            <strong id="insightText">Analizando combinaciones útiles del catálogo.</strong>
+          </div>
+        </div>
+        <div class="sidebar-actions">
+          <button class="secondary-btn" id="clearFiltersBtn" type="button">Limpiar filtros</button>
+          <button class="secondary-btn" id="loadSuggestedBtn" type="button">Cargar sugerencia</button>
+        </div>
+      </section>
+    </aside>
+
+    <main class="workspace">
+      <header class="workspace-header compact-header">
+        <div class="header-copy">
+          <div class="eyebrow">Catálogo operacional</div>
+          <h2>Selección y armado de pedido</h2>
+        </div>
+        <div class="workspace-metrics compact-metrics">
+          <div class="metric-pill">
+            <small>Categoría</small>
+            <strong id="activeCategoryLabel">Todas</strong>
+          </div>
+          <div class="metric-pill">
+            <small>Margen base</small>
+            <strong id="heroMarginLabel">22%</strong>
+          </div>
+          <label class="metric-pill input-pill">
+            <small>Dólar actualizado</small>
+            <div class="inline-money-input">
+              <span>$</span>
+              <input id="headerExchangeRateInput" type="number" min="1" step="1" value="945">
+            </div>
+          </label>
+          <div class="metric-pill currency-pill">
+            <small>Moneda</small>
+            <div class="currency-switch" id="currencySwitch">
+              <button class="currency-btn active" type="button" data-currency="USD">USD</button>
+              <button class="currency-btn" type="button" data-currency="CLP">CLP</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="toolbar">
+        <div class="toolbar-start">
+          <label class="toolbar-filter">
+            <span class="section-subtitle">Filtro</span>
+            <select id="stockFilterSelect">
+              <option value="all">Todos</option>
+              <option value="available">Con stock</option>
+              <option value="low">Stock bajo</option>
+              <option value="out">Por confirmar</option>
+            </select>
+          </label>
+          <div>
+            <div class="section-subtitle">Vista catálogo</div>
+            <p id="toolbarSummary">Cargando catálogo...</p>
+          </div>
+        </div>
+        <div class="toolbar-actions">
+          <div class="view-switch" id="viewSwitch">
+            <button class="view-btn active" type="button" data-view="list">Lista</button>
+            <button class="view-btn" type="button" data-view="compact">Compacta</button>
+            <button class="view-btn" type="button" data-view="full">Completa</button>
+          </div>
+          <button class="secondary-btn" id="quickOpenPreviewBtn" type="button">Vista previa PDF</button>
+        </div>
+      </section>
+
+      <section class="product-grid" id="productGrid" aria-live="polite">
+        <article class="empty-state">
+          <h3>Cargando catálogo</h3>
+          <p>Preparando productos y categorías para la vista operacional.</p>
+        </article>
+      </section>
+    </main>
+
+    <aside class="order-rail">
+      <section class="order-card">
+        <div class="section-title">
+          <span>Pedido actual</span>
+          <strong id="selectedCount">0 ítems</strong>
+        </div>
+        <div class="order-mode-line">
+          <span id="summaryModeLabel">Vista interna</span>
+          <div class="mode-switch" id="modeSwitchMini">
+            <button class="mode-btn active" type="button" data-mode="internal">Interna</button>
+            <button class="mode-btn" type="button" data-mode="client">Cliente</button>
+          </div>
+        </div>
+        <div class="mini-cart-list" id="quoteItems">
+          <div class="quote-empty">
+            <h3>Sin selección</h3>
+            <p>Agrega productos desde el catálogo para abrir el cotizador detallado.</p>
+          </div>
+        </div>
+        <div class="mini-summary">
+          <div class="summary-row">
+            <span>Costo base</span>
+            <strong id="costTotal">USD 0,00</strong>
+          </div>
+          <div class="summary-row">
+            <span>Total venta</span>
+            <strong id="salesTotal">USD 0,00</strong>
+          </div>
+          <div class="summary-row">
+            <span>Utilidad</span>
+            <strong id="profitTotal">USD 0,00</strong>
+          </div>
+          <div class="summary-row total">
+            <span>Total CLP</span>
+            <strong id="clpTotal">$0</strong>
+          </div>
+        </div>
+        <div class="cta-stack">
+          <button class="primary-btn" id="openCalculatorBtn" type="button">Calcular Margen y Cotizar</button>
+          <button class="secondary-btn" id="flyerBtn" type="button">Preparar flyer</button>
+          <button class="secondary-btn" id="crmBtn" type="button">Registrar borrador</button>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <div class="overlay-shell hidden" id="calculatorOverlay" aria-hidden="true">
+    <div class="overlay-backdrop" data-close-calculator="true"></div>
+    <section class="modal-window calculator-window">
+      <header class="modal-header">
+        <div>
+          <div class="eyebrow">Ventana de cotización</div>
+          <h2>Calculadora de margen y edición de propuesta</h2>
+        </div>
+        <div class="modal-header-actions">
+          <div class="mode-switch" id="modeSwitchModal">
+            <button class="mode-btn active" type="button" data-mode="internal">Interna</button>
+            <button class="mode-btn" type="button" data-mode="client">Cliente</button>
+          </div>
+          <button class="secondary-btn" id="closeCalculatorBtn" type="button">Cerrar</button>
+        </div>
+      </header>
+
+      <div class="calculator-layout">
+        <div class="calculator-main">
+          <div class="calculator-toolbar">
+            <div class="toolbar-block">
+              <label class="field compact">
+                <span>Margen global %</span>
+                <input id="globalMarginInput" type="number" min="0" max="300" step="1" value="22">
+              </label>
+              <label class="field compact">
+                <span>Tipo de cambio CLP</span>
+                <input id="exchangeRateInput" type="number" min="1" step="1" value="945">
+              </label>
+            </div>
+            <div class="toolbar-block metrics-inline">
+              <div class="metric-inline">
+                <small>Ítems</small>
+                <strong id="calculatorItemCount">0</strong>
+              </div>
+              <div class="metric-inline">
+                <small>Total USD</small>
+                <strong id="calculatorSalesTotal">USD 0,00</strong>
+              </div>
+              <div class="metric-inline">
+                <small>Utilidad</small>
+                <strong id="calculatorProfitTotal">USD 0,00</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="quote-table">
+              <thead>
+                <tr>
+                  <th>Cant.</th>
+                  <th>U/M</th>
+                  <th>P/N</th>
+                  <th>Marca</th>
+                  <th>Descripción</th>
+                  <th class="numeric internal-only">Costo unit.</th>
+                  <th class="numeric internal-only">Costo total</th>
+                  <th class="numeric internal-only">Margen %</th>
+                  <th class="numeric">PVP unit.</th>
+                  <th class="numeric">Subtotal</th>
+                  <th>Disponibilidad</th>
+                  <th>Comentarios</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="calculatorTableBody">
+                <tr>
+                  <td colspan="13">
+                    <div class="table-empty">Agrega productos desde el catálogo para editar la cotización.</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <aside class="calculator-side">
+          <section class="side-panel">
+            <div class="section-title">
+              <span>Métricas</span>
+              <strong>Resumen</strong>
+            </div>
+            <div class="summary-card-grid">
+              <div class="summary-kpi">
+                <small>Costo base</small>
+                <strong id="modalCostTotal">USD 0,00</strong>
+              </div>
+              <div class="summary-kpi">
+                <small>Venta total</small>
+                <strong id="modalSalesTotal">USD 0,00</strong>
+              </div>
+              <div class="summary-kpi">
+                <small>Utilidad</small>
+                <strong id="modalProfitTotal">USD 0,00</strong>
+              </div>
+              <div class="summary-kpi total">
+                <small>Total CLP</small>
+                <strong id="modalClpTotal">$0</strong>
+              </div>
+            </div>
+          </section>
+
+          <section class="side-panel">
+            <div class="section-title">
+              <span>Datos del cliente</span>
+              <strong>Formulario</strong>
+            </div>
+            <div class="client-form">
+              <label class="field compact">
+                <span>Cliente</span>
+                <input id="clientNameInput" type="text" placeholder="Empresa o razón social">
+              </label>
+              <label class="field compact">
+                <span>Propuesta</span>
+                <input id="proposalNameInput" type="text" placeholder="Nombre de la propuesta">
+              </label>
+              <label class="field compact">
+                <span>Contacto</span>
+                <input id="clientContactInput" type="text" placeholder="Nombre del contacto">
+              </label>
+              <label class="field compact">
+                <span>Email</span>
+                <input id="clientEmailInput" type="email" placeholder="correo@cliente.com">
+              </label>
+              <label class="field compact">
+                <span>N° cotización</span>
+                <input id="quoteNumberInput" type="text" placeholder="TEC-2026-001">
+              </label>
+              <label class="field compact">
+                <span>Validez</span>
+                <input id="validityInput" type="text" placeholder="5 días hábiles">
+              </label>
+              <label class="field compact">
+                <span>Notas</span>
+                <textarea id="clientNotesInput" rows="4" placeholder="Condiciones, tiempos, observaciones comerciales"></textarea>
+              </label>
+            </div>
+          </section>
+
+          <section class="side-panel">
+            <div class="section-title">
+              <span>Acciones</span>
+              <strong>Salida</strong>
+            </div>
+            <div class="side-actions">
+              <button class="primary-btn" id="previewFromModalBtn" type="button">Vista previa de cotización</button>
+              <button class="primary-btn alt" id="exportPdfBtn" type="button">Exportar PDF</button>
+              <button class="secondary-btn" id="flyerFromModalBtn" type="button">Flyer como complemento</button>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <div class="overlay-shell hidden" id="previewOverlay" aria-hidden="true">
+    <div class="overlay-backdrop" data-close-preview="true"></div>
+    <section class="modal-window preview-window">
+      <header class="modal-header">
+        <div>
+          <div class="eyebrow">Vista previa</div>
+          <h2>Hoja de cotización TECNOVOA</h2>
+        </div>
+        <div class="modal-header-actions">
+          <button class="secondary-btn" id="closePreviewBtn" type="button">Cerrar</button>
+          <button class="primary-btn" id="printPreviewBtn" type="button">Imprimir / PDF</button>
+        </div>
+      </header>
+      <div class="preview-sheet" id="previewSheet"></div>
+    </section>
+  </div>
+
+  <div class="overlay-shell hidden" id="flyerOverlay" aria-hidden="true">
+    <div class="overlay-backdrop" data-close-flyer="true"></div>
+    <section class="modal-window flyer-window">
+      <header class="modal-header">
+        <div>
+          <div class="eyebrow">Complemento comercial</div>
+          <h2>Brief de flyer</h2>
+        </div>
+        <button class="secondary-btn" id="closeFlyerBtn" type="button">Cerrar</button>
+      </header>
+      <p class="flyer-copy">El flyer se mantiene como una acción secundaria. Usa esta lista como brief rápido para una pieza comercial complementaria.</p>
+      <ul class="flyer-points" id="flyerPoints">
+        <li>Selecciona productos para generar una sugerencia de campaña.</li>
+      </ul>
+      <button class="primary-btn" id="flyerConfirmBtn" type="button">Marcar brief listo</button>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

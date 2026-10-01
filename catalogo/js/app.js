@@ -293,39 +293,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // --- INICIALIZACIÓN DE FIREBASE DIRECTA (SPARK PLAN COMPATIBLE) ---
-    let dbInstance = null;
-    let isFirebaseReady = false;
-
-    function initFirebaseDirect() {
-        return fetch('/__/firebase/init.json')
-            .then(res => {
-                if (!res.ok) throw new Error('No Firebase configuration available.');
-                return res.json();
-            })
-            .then(config => {
-                firebase.initializeApp(config);
-                dbInstance = firebase.firestore();
-                isFirebaseReady = true;
-                console.log('Firebase initialized directly from hosting.');
-            })
-            .catch(err => {
-                console.log('Using local python server (not on Firebase Hosting):', err.message);
-            });
-    }
-
     function fetchProductOverrides() {
-        if (isFirebaseReady && dbInstance) {
-            return dbInstance.collection('product_overrides').get()
-                .then(snapshot => {
-                    const overrides = {};
-                    snapshot.forEach(doc => {
-                        overrides[doc.id] = doc.data();
-                    });
-                    return overrides;
-                });
-        }
-        return fetch('/api/product-overrides').then(res => res.json());
+        return fetch('/api/product-overrides')
+            .then(res => res.json())
+            .catch(err => {
+                console.warn('Could not fetch product overrides:', err);
+                return {};
+            });
     }
 
     function saveProductOverride(updatedData) {
@@ -333,9 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return Promise.resolve({ status: 'success', message: 'Actualizado en memoria temporalmente' });
     }
 
-    initFirebaseDirect().finally(() => {
-        loadCatalog('general', true);
-    });
+    loadCatalog('general', true);
 
 
     function parseCurrencyString(str, isClp = false) {

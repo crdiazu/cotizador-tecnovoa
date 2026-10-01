@@ -12,22 +12,7 @@ COM_DIR = os.path.join(VAULT_ROOT, "_Comunicaciones")
 INDEX_PATH = os.path.join(COM_DIR, "_Comunicaciones_INDEX.md")
 HISTORY_PATH = os.path.join(VAULT_ROOT, "tecnovoa_quotation_history.md")
 
-# --- Inicialización de Firebase Admin para administración de Overrides ---
-db = None
-KEY_PATH = os.path.join(DIRECTORY, "serviceAccountKey.json")
-if os.path.exists(KEY_PATH):
-    try:
-        import firebase_admin
-        from firebase_admin import credentials, firestore
-        if not firebase_admin._apps:
-            cred = credentials.Certificate(KEY_PATH)
-            firebase_admin.initialize_app(cred)
-        db = firestore.client()
-        print("Conectado con éxito a Firestore (Overrides activos).")
-    except Exception as e:
-        print(f"Advertencia: No se pudo conectar a Firestore: {e}")
-else:
-    print("Aviso: serviceAccountKey.json no encontrado. Usando base de datos local JSON.")
+
 
 
 
@@ -349,14 +334,7 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
             self.end_headers()
             
             overrides = {}
-            # 1. Intentar leer desde Firestore
-            if db is not None:
-                try:
-                    docs = db.collection('product_overrides').stream()
-                    for doc in docs:
-                        overrides[doc.id] = doc.to_dict()
-                except Exception as e:
-                    print(f"Error al leer overrides de Firestore: {e}")
+
 
             # 2. Mezclar con archivo local JSON
             local_path = os.path.join(DIRECTORY, "catalogo", "data", "product_overrides.json")
@@ -453,12 +431,7 @@ class CustomHandler(http.server.SimpleHTTPRequestHandler):
                     self.wfile.write(b"PN (Part Number) es requerido")
                     return
 
-                # 1. Guardar en Firestore
-                if db is not None:
-                    try:
-                        db.collection('product_overrides').document(pn).set(override_data)
-                    except Exception as e:
-                        print(f"Error al guardar override en Firestore: {e}")
+
 
                 # 2. Guardar en JSON local
                 local_path = os.path.join(DIRECTORY, "catalogo", "data", "product_overrides.json")
