@@ -1,7 +1,7 @@
-# 🗂️ Instructivo de Gestión de Datos — Catálogo VESTAS
+# 🗂️ Instructivo de Gestión de Datos — Catálogo TECNOVOA
 
-> **Para:** Ursula Zuñiga
-> **Planilla origen:** Google Sheets → `Hoja 2` (`Tabla_1`)  
+> **Para:** Equipo de Ventas TECNOVOA
+> **Planilla origen:** Google Sheets → `Hoja 2` (`CATALOGO`)  
 > **Última revisión:** Mayo 2026
 
 ---
@@ -196,4 +196,4 @@ Usar esta lista cada vez que se haga una carga masiva de precios o stock:
 
 ---
 
-*Catálogo B2B Privado VESTAS / TECNOVOA — Documento de uso interno.*
+*Catálogo B2B Privado TECNOVOA — Documento de uso interno.*

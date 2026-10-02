@@ -13,9 +13,8 @@ La experiencia debe sentirse como una herramienta interna premium: sobria, rápi
 - Generación de flyers individuales como addon del catálogo
 - Generación futura de catálogo revista desde productos seleccionados
 
-## Restricción clave
-- El proyecto madre VESTAS queda intacto y se usa solo como referencia funcional y documental
-- Esta guía describe la evolución de una app privada propia de TECNOVOA
+## Principio rector
+- Esta guía describe la arquitectura visual y operativa de una aplicación privada propia y exclusiva de TECNOVOA.
 
 ---
 
@@ -442,7 +441,6 @@ Tarjeta para mostrar enriquecimiento desde el vault:
 
 - No diseñar para móvil
 - No convertir esto en tienda pública
-- No modificar el proyecto VESTAS
 - No mezclar branding de clientes externos con la identidad base de TECNOVOA
 
 ---
