@@ -1602,8 +1602,21 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('flyerSpec4').value = spec4;
         
         document.getElementById('flyerCta').value = 'COMPRAR AHORA';
-        document.getElementById('flyerContactPhone').value = '+56 9 4943 8288';
+        document.getElementById('flyerContactPhone').value = localStorage.getItem('tecnovoa_seller_phone') || '+56 9 4943 8288';
         document.getElementById('flyerContactWeb').value = 'www.tecnovoa.cl';
+        
+        if (localStorage.getItem('tecnovoa_seller_name')) {
+            const el = document.getElementById('flyerSellerName');
+            if (el) el.value = localStorage.getItem('tecnovoa_seller_name');
+        }
+        if (localStorage.getItem('tecnovoa_seller_email')) {
+            const el = document.getElementById('flyerSellerEmail');
+            if (el) el.value = localStorage.getItem('tecnovoa_seller_email');
+        }
+        if (localStorage.getItem('tecnovoa_seller_title')) {
+            const el = document.getElementById('flyerSellerTitle');
+            if (el) el.value = localStorage.getItem('tecnovoa_seller_title');
+        }
         
         loadProductImage(product.image);
         loadQrImage(document.getElementById('flyerContactWeb').value);
@@ -1744,6 +1757,15 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             // Default cyan bullet
         }
+    }
+
+    function getInitials(name) {
+        if (!name || !name.trim()) return 'TV';
+        const words = name.trim().split(/\s+/);
+        if (words.length === 1) {
+            return words[0].substring(0, 2).toUpperCase();
+        }
+        return (words[0][0] + words[words.length - 1][0]).toUpperCase();
     }
 
     function drawFlyer() {
@@ -1917,25 +1939,40 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fill();
         ctx.font = 'bold 16px Poppins, sans-serif';
         ctx.fillStyle = '#FFFFFF';
+        // Datos del vendedor y avatar dinámico
+        const sellerName = document.getElementById('flyerSellerName')?.value || 'Cristian Díaz';
+        const sellerTitle = document.getElementById('flyerSellerTitle')?.value || 'Ejecutivo Comercial · Tecnovoa';
+        const sellerEmail = document.getElementById('flyerSellerEmail')?.value || 'cristian@tecnovoa.cl';
+        const initials = getInitials(sellerName);
+
+        // Avatar con iniciales dinámicas
+        const avatarX = 95;
+        const avatarCY = contactY + 40;
+        ctx.fillStyle = '#1976D2';
+        ctx.beginPath();
+        ctx.arc(avatarX, avatarCY, 22, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.font = 'bold 16px Poppins, sans-serif';
+        ctx.fillStyle = '#FFFFFF';
         ctx.textAlign = 'center';
-        ctx.fillText('CD', avatarX, avatarCY + 6);
+        ctx.fillText(initials, avatarX, avatarCY + 6);
         ctx.textAlign = 'left';
         
         // Nombre y cargo
         ctx.font = 'bold 18px Poppins, sans-serif';
         ctx.fillStyle = '#0B1F4A';
-        ctx.fillText('Cristian Díaz', 130, contactY + 33);
+        ctx.fillText(sellerName, 130, contactY + 33);
         ctx.font = '13px Poppins, sans-serif';
         ctx.fillStyle = '#64748B';
-        ctx.fillText('Ejecutivo Comercial · Tecnovoa', 130, contactY + 52);
+        ctx.fillText(sellerTitle, 130, contactY + 52);
         
         // Teléfono y email a la derecha
-        const contactPhone = document.getElementById('flyerContactPhone').value || '+569 4943 8288';
+        const contactPhone = document.getElementById('flyerContactPhone')?.value || '+56 9 4943 8288';
         ctx.font = '500 15px Poppins, sans-serif';
         ctx.fillStyle = '#0B1F4A';
         ctx.textAlign = 'right';
         ctx.fillText(contactPhone, 995, contactY + 33);
-        ctx.fillText('cristian@tecnovoa.cl', 995, contactY + 55);
+        ctx.fillText(sellerEmail, 995, contactY + 55);
         ctx.textAlign = 'left';
 
         // === FOOTER EMPRESA ===
@@ -2057,13 +2094,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const flyerInputs = [
         'flyerBrand', 'flyerId', 'flyerTitlePrincipal', 'flyerTitleSecundario',
         'flyerSpec1', 'flyerSpec2', 'flyerSpec3', 'flyerSpec4',
-        'flyerPrice', 'flyerCta', 'flyerContactPhone'
+        'flyerPrice', 'flyerCta', 'flyerContactPhone',
+        'flyerSellerName', 'flyerSellerEmail', 'flyerSellerTitle'
     ];
     
     flyerInputs.forEach(id => {
         const input = document.getElementById(id);
         if (input) {
             input.addEventListener('input', drawFlyer);
+        }
+    });
+
+    const sellerStorageMap = {
+        'flyerSellerName': 'tecnovoa_seller_name',
+        'flyerSellerEmail': 'tecnovoa_seller_email',
+        'flyerSellerTitle': 'tecnovoa_seller_title',
+        'flyerContactPhone': 'tecnovoa_seller_phone'
+    };
+
+    Object.keys(sellerStorageMap).forEach(id => {
+        const input = document.getElementById(id);
+        if (input) {
+            input.addEventListener('input', (e) => {
+                localStorage.setItem(sellerStorageMap[id], e.target.value);
+            });
         }
     });
 
