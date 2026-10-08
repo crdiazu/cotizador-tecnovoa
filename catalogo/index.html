@@ -96,6 +96,11 @@
                         <span class="er-unit">CLP</span>
                     </div>
                     <span id="productCount">Cargando...</span>
+                    <!-- Seller Portal chip button -->
+                    <button type="button" class="seller-btn-chip" id="openSellerPortalBtn" title="Cambiar vendedor activo" style="display: flex; align-items: center; gap: 6px; padding: 6px 14px; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 20px; color: #38BDF8; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+                        <span>👤</span>
+                        <span id="activeSellerHeaderName">Vendedor: Cristian Díaz</span>
+                    </button>
                     <!-- Currency toggle -->
                     <div class="currency-toggle" id="currencyToggle">
                         <button class="curr-btn active" id="currUsdBtn" title="Precios en dólares">USD $</button>
@@ -409,6 +414,53 @@
                 <strong>Úrsula Zúñiga</strong> — Jefa de Ventas<br>
                 ursula@tecnovoa.cl · +56 9 8484 9276</p>
             </div>
+        </div>
+    </div>
+
+    <!-- Seller Portal Modal -->
+    <div id="sellerPortalModal" class="modal" onclick="if(event.target===this)this.classList.remove('active')">
+        <div class="modal-content" style="max-width: 480px; padding: 1.5rem; border-radius: 12px; background: #0F172A; color: #F8FAFC; border: 1px solid #1E293B;">
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; border-bottom: 1px solid #334155; padding-bottom: 0.8rem;">
+                <h2 style="font-size: 1.2rem; font-weight: 700; color: #38BDF8; display: flex; align-items: center; gap: 8px; margin: 0;">
+                    👤 Seleccionar Vendedor / Ejecutivo
+                </h2>
+                <button class="close-btn" onclick="document.getElementById('sellerPortalModal').classList.remove('active')" style="background: none; border: none; color: #94A3B8; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            
+            <form id="sellerPortalForm" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 1rem;">
+                <div class="input-field">
+                    <label for="sellerSelect" style="font-size: 0.82rem; font-weight: 600; color: #94A3B8; margin-bottom: 0.3rem; display: block;">Elegir Ejecutivo de la Lista:</label>
+                    <select id="sellerSelect" style="width: 100%; padding: 10px; background: #1E293B; border: 1px solid #334155; color: #FFF; border-radius: 6px; font-size: 0.9rem;">
+                        <option value="custom">✍️ Personalizado / Otro vendedor</option>
+                    </select>
+                    <small style="color: #64748B; font-size: 0.75rem; margin-top: 4px; display: block;">* La lista se sincroniza con la hoja de Vendedores en Google Sheets si está disponible.</small>
+                </div>
+
+                <div class="input-field">
+                    <label for="portalSellerName" style="font-size: 0.82rem; font-weight: 600; color: #94A3B8; margin-bottom: 0.3rem; display: block;">Nombre Completo del Vendedor:</label>
+                    <input type="text" id="portalSellerName" placeholder="Ej: Cristian Díaz" style="width: 100%; padding: 9px; background: #1E293B; border: 1px solid #334155; color: #FFF; border-radius: 6px; font-size: 0.9rem;" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="portalSellerEmail" style="font-size: 0.82rem; font-weight: 600; color: #94A3B8; margin-bottom: 0.3rem; display: block;">Correo Electrónico:</label>
+                    <input type="email" id="portalSellerEmail" placeholder="Ej: cristian@tecnovoa.cl" style="width: 100%; padding: 9px; background: #1E293B; border: 1px solid #334155; color: #FFF; border-radius: 6px; font-size: 0.9rem;" required>
+                </div>
+
+                <div class="input-field">
+                    <label for="portalSellerTitle" style="font-size: 0.82rem; font-weight: 600; color: #94A3B8; margin-bottom: 0.3rem; display: block;">Cargo / Título Profesional:</label>
+                    <input type="text" id="portalSellerTitle" placeholder="Ej: Ejecutivo Comercial · Tecnovoa" style="width: 100%; padding: 9px; background: #1E293B; border: 1px solid #334155; color: #FFF; border-radius: 6px; font-size: 0.9rem;">
+                </div>
+
+                <div class="input-field">
+                    <label for="portalSellerPhone" style="font-size: 0.82rem; font-weight: 600; color: #94A3B8; margin-bottom: 0.3rem; display: block;">Teléfono de Contacto:</label>
+                    <input type="text" id="portalSellerPhone" placeholder="Ej: +56 9 4943 8288" style="width: 100%; padding: 9px; background: #1E293B; border: 1px solid #334155; color: #FFF; border-radius: 6px; font-size: 0.9rem;">
+                </div>
+
+                <div style="display: flex; gap: 0.6rem; margin-top: 0.5rem;">
+                    <button type="button" id="saveSellerPortalBtn" class="primary-btn block-btn" style="flex: 1; padding: 10px !important; background: #0284C7; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">✅ Confirmar Vendedor</button>
+                    <button type="button" class="sec-btn block-btn" onclick="document.getElementById('sellerPortalModal').classList.remove('active')" style="flex: 1; padding: 10px !important; background: #334155; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Cancelar</button>
+                </div>
+            </form>
         </div>
     </div>
 

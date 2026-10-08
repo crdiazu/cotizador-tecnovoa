@@ -2248,6 +2248,178 @@ document.addEventListener('DOMContentLoaded', () => {
         copyFlyerBtn.addEventListener('click', copyFlyerToClipboard);
     }
 
+    // --- LÓGICA DEL PORTAL DE VENDEDORES ---
+    let sellersList = [
+        { name: 'Cristian Díaz', email: 'cristian@tecnovoa.cl', title: 'Ejecutivo Comercial · Tecnovoa', phone: '+56 9 4943 8288' },
+        { name: 'Úrsula Valenzuela', email: 'ursula@tecnovoa.cl', title: 'Ejecutivo Comercial · Tecnovoa', phone: '+56 9 8484 9276' }
+    ];
+
+    function populateSellerSelect() {
+        const select = document.getElementById('sellerSelect');
+        if (!select) return;
+        select.innerHTML = '';
+        
+        sellersList.forEach((s, idx) => {
+            const opt = document.createElement('option');
+            opt.value = idx;
+            opt.textContent = `👤 ${s.name} (${s.email})`;
+            select.appendChild(opt);
+        });
+        
+        const customOpt = document.createElement('option');
+        customOpt.value = 'custom';
+        customOpt.textContent = '✍️ Personalizado / Otro vendedor';
+        select.appendChild(customOpt);
+    }
+
+    function updateActiveSeller(name, email, title, phone) {
+        if (!name || !name.trim()) return;
+        localStorage.setItem('tecnovoa_seller_name', name);
+        localStorage.setItem('tecnovoa_seller_email', email || '');
+        localStorage.setItem('tecnovoa_seller_title', title || '');
+        localStorage.setItem('tecnovoa_seller_phone', phone || '');
+
+        const headerSpan = document.getElementById('activeSellerHeaderName');
+        if (headerSpan) headerSpan.textContent = `Vendedor: ${name}`;
+
+        const flyerName = document.getElementById('flyerSellerName');
+        if (flyerName) flyerName.value = name;
+
+        const flyerEmail = document.getElementById('flyerSellerEmail');
+        if (flyerEmail) flyerEmail.value = email || '';
+
+        const flyerTitle = document.getElementById('flyerSellerTitle');
+        if (flyerTitle) flyerTitle.value = title || '';
+
+        const flyerPhone = document.getElementById('flyerContactPhone');
+        if (flyerPhone) flyerPhone.value = phone || '';
+
+        if (typeof drawFlyer === 'function') drawFlyer();
+    }
+
+    function syncActiveSellerToUI() {
+        const name = localStorage.getItem('tecnovoa_seller_name') || 'Cristian Díaz';
+        const email = localStorage.getItem('tecnovoa_seller_email') || 'cristian@tecnovoa.cl';
+        const title = localStorage.getItem('tecnovoa_seller_title') || 'Ejecutivo Comercial · Tecnovoa';
+        const phone = localStorage.getItem('tecnovoa_seller_phone') || '+56 9 4943 8288';
+        updateActiveSeller(name, email, title, phone);
+    }
+
+    function loadSellersFromSheet() {
+        const SELLERS_URL = 'https://docs.google.com/spreadsheets/d/1Jq5zoUnmfm1ySwRzqaqcMV_LGLyq6F1ghNjEDrUI7OY/gviz/tq?tqx=out:csv&sheet=VENDEDORES&cache=' + new Date().getTime();
+        fetch(SELLERS_URL)
+            .then(res => {
+                if (!res.ok) throw new Error('No sheet');
+                return res.text();
+            })
+            .then(csv => {
+                const lines = csv.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                if (lines.length > 1) {
+                    const parsed = [];
+                    for (let i = 1; i < lines.length; i++) {
+                        const cols = lines[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
+                        if (cols.length >= 1 && cols[0]) {
+                            parsed.push({
+                                name: cols[0],
+                                email: cols[1] || '',
+                                title: cols[2] || 'Ejecutivo Comercial · Tecnovoa',
+                                phone: cols[3] || '+56 9 4943 8288'
+                            });
+                        }
+                    }
+                    if (parsed.length > 0) {
+                        sellersList = parsed;
+                        populateSellerSelect();
+                    }
+                }
+            })
+            .catch(err => {
+                console.log('Hoja VENDEDORES aún no creada en Google Sheets, usando lista base.');
+            });
+    }
+
+    function initSellerPortal() {
+        populateSellerSelect();
+        syncActiveSellerToUI();
+        loadSellersFromSheet();
+
+        const openBtn = document.getElementById('openSellerPortalBtn');
+        const modal = document.getElementById('sellerPortalModal');
+        const select = document.getElementById('sellerSelect');
+        const saveBtn = document.getElementById('saveSellerPortalBtn');
+
+        const pName = document.getElementById('portalSellerName');
+        const pEmail = document.getElementById('portalSellerEmail');
+        const pTitle = document.getElementById('portalSellerTitle');
+        const pPhone = document.getElementById('portalSellerPhone');
+
+        if (openBtn && modal) {
+            openBtn.addEventListener('click', () => {
+                const currentName = localStorage.getItem('tecnovoa_seller_name') || 'Cristian Díaz';
+                const currentEmail = localStorage.getItem('tecnovoa_seller_email') || 'cristian@tecnovoa.cl';
+                const currentTitle = localStorage.getItem('tecnovoa_seller_title') || 'Ejecutivo Comercial · Tecnovoa';
+                const currentPhone = localStorage.getItem('tecnovoa_seller_phone') || '+56 9 4943 8288';
+
+                if (pName) pName.value = currentName;
+                if (pEmail) pEmail.value = currentEmail;
+                if (pTitle) pTitle.value = currentTitle;
+                if (pPhone) pPhone.value = currentPhone;
+
+                const matchedIdx = sellersList.findIndex(s => s.name.toLowerCase() === currentName.toLowerCase());
+                if (select) {
+                    if (matchedIdx !== -1) {
+                        select.value = matchedIdx;
+                    } else {
+                        select.value = 'custom';
+                    }
+                }
+
+                modal.classList.add('active');
+            });
+        }
+
+        if (select) {
+            select.addEventListener('change', (e) => {
+                const val = e.target.value;
+                if (val !== 'custom' && sellersList[val]) {
+                    const s = sellersList[val];
+                    if (pName) pName.value = s.name;
+                    if (pEmail) pEmail.value = s.email;
+                    if (pTitle) pTitle.value = s.title;
+                    if (pPhone) pPhone.value = s.phone;
+                }
+            });
+        }
+
+        if (saveBtn && modal) {
+            saveBtn.addEventListener('click', () => {
+                const name = pName ? pName.value.trim() : '';
+                if (!name) {
+                    alert('Por favor ingresa un nombre para el vendedor.');
+                    return;
+                }
+                updateActiveSeller(
+                    name,
+                    pEmail ? pEmail.value.trim() : '',
+                    pTitle ? pTitle.value.trim() : '',
+                    pPhone ? pPhone.value.trim() : ''
+                );
+                modal.classList.remove('active');
+                if (typeof showToast === 'function') {
+                    showToast(`Vendedor activo: ${name}`);
+                }
+            });
+        }
+
+        if (!localStorage.getItem('tecnovoa_seller_name') && modal && openBtn) {
+            setTimeout(() => {
+                openBtn.click();
+            }, 600);
+        }
+    }
+
+    initSellerPortal();
+
     // --- LÓGICA DE EDICIÓN DE PRODUCTOS ---
     window.openProductEditModal = function(pn) {
         const p = allProducts.find(prod => prod.pn === pn);
