@@ -13,7 +13,7 @@
 </head>
 <body>
     <!-- Pantalla de Acceso (Login Overlay) -->
-    <div id="loginOverlay" class="login-overlay hidden" style="display: none;">
+    <div id="loginOverlay" class="login-overlay">
         <div class="login-card">
             <div class="login-header">
                 <div class="logos" style="display: flex; justify-content: center; margin-bottom: 0.5rem;">
@@ -462,9 +462,12 @@
                     <input type="text" id="portalSellerPhone" placeholder="Ej: +56 9 4943 8288" style="width: 100%; padding: 9px; background: #1E293B; border: 1px solid #334155; color: #FFF; border-radius: 6px; font-size: 0.9rem;">
                 </div>
 
-                <div style="display: flex; gap: 0.6rem; margin-top: 0.5rem;">
-                    <button type="button" id="saveSellerPortalBtn" class="primary-btn block-btn" style="flex: 1; padding: 10px !important; background: #0284C7; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">✅ Confirmar Vendedor</button>
-                    <button type="button" class="sec-btn block-btn" onclick="document.getElementById('sellerPortalModal').classList.remove('active')" style="flex: 1; padding: 10px !important; background: #334155; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Cancelar</button>
+                <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem;">
+                    <div style="display: flex; gap: 0.6rem;">
+                        <button type="button" id="saveSellerPortalBtn" class="primary-btn block-btn" style="flex: 1; padding: 10px !important; background: #0284C7; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">✅ Confirmar Vendedor</button>
+                        <button type="button" class="sec-btn block-btn" onclick="document.getElementById('sellerPortalModal').classList.remove('active')" style="flex: 1; padding: 10px !important; background: #334155; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Cancelar</button>
+                    </div>
+                    <button type="button" id="logoutSellerBtn" style="width: 100%; padding: 8px; background: rgba(239, 68, 68, 0.12); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; font-weight: 600; font-size: 0.82rem; cursor: pointer; margin-top: 4px;">🔒 Cerrar Sesión / Ingresar con otra clave</button>
                 </div>
             </form>
         </div>

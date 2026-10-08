@@ -2506,6 +2506,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
+
+        const logoutBtn = document.getElementById('logoutSellerBtn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('tecnovoa_auth_token');
+                if (portalModal) portalModal.classList.remove('active');
+                if (loginOverlay) {
+                    loginOverlay.style.display = 'flex';
+                    loginOverlay.classList.remove('hidden');
+                }
+            });
+        }
     }
 
     initLoginAndSellerPortal();
