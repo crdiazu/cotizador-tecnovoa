@@ -2317,36 +2317,49 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadSellersFromSheet() {
-        const SELLERS_URL = 'https://docs.google.com/spreadsheets/d/1Jq5zoUnmfm1ySwRzqaqcMV_LGLyq6F1ghNjEDrUI7OY/gviz/tq?tqx=out:csv&sheet=VENDEDORES&cache=' + new Date().getTime();
-        fetch(SELLERS_URL)
-            .then(res => {
-                if (!res.ok) throw new Error('No sheet');
+        const fetchSheet = (sheetName) => {
+            const url = `https://docs.google.com/spreadsheets/d/1Jq5zoUnmfm1ySwRzqaqcMV_LGLyq6F1ghNjEDrUI7OY/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheetName)}&cache=` + new Date().getTime();
+            return fetch(url).then(res => {
+                if (!res.ok) throw new Error(`Sheet ${sheetName} not found`);
                 return res.text();
-            })
-            .then(csv => {
-                const lines = csv.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-                if (lines.length > 1) {
-                    const parsed = [];
-                    for (let i = 1; i < lines.length; i++) {
-                        const cols = lines[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
-                        if (cols.length >= 1 && cols[0]) {
-                            parsed.push({
-                                name: cols[0],
-                                email: cols[1] || '',
-                                title: cols[2] || 'Ejecutivo Comercial · Tecnovoa',
-                                phone: cols[3] || '+56 9 4943 8288',
-                                password: cols[4] || '1234'
-                            });
-                        }
-                    }
-                    if (parsed.length > 0) {
-                        sellersList = parsed;
-                        populateSellerSelects();
+            });
+        };
+
+        const processCsv = (csv) => {
+            const lines = csv.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            if (lines.length > 1) {
+                const parsed = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
+                    if (cols.length >= 1 && cols[0]) {
+                        parsed.push({
+                            name: cols[0],
+                            email: cols[1] || '',
+                            title: cols[2] || 'Ejecutivo Comercial · Tecnovoa',
+                            phone: cols[3] || '+56 9 4943 8288',
+                            password: cols[4] || '1234'
+                        });
                     }
                 }
+                if (parsed.length > 0) {
+                    sellersList = parsed;
+                    populateSellerSelects();
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        fetchSheet('VENDEDOR')
+            .then(csv => {
+                if (!processCsv(csv)) throw new Error('VENDEDOR tab empty');
             })
-            .catch(err => {
-                console.log('Hoja VENDEDORES aún no creada o sin acceso, usando vendedores por defecto.');
+            .catch(() => {
+                fetchSheet('VENDEDORES')
+                    .then(csv => processCsv(csv))
+                    .catch(err => {
+                        console.log('Hojas VENDEDOR / VENDEDORES no disponibles aún en Google Sheets, usando lista por defecto.');
+                    });
             });
     }
 
