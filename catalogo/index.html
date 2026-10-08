@@ -22,20 +22,26 @@
                 <p>Catálogo B2B Privado</p>
             </div>
             <form id="loginForm" class="login-form" onsubmit="return false;">
+                <div style="margin-bottom: 0.8rem;">
+                    <label for="loginSellerSelect" class="input-label" style="font-weight: 600; margin-bottom: 0.4rem; display: block;">Selecciona tu Perfil de Vendedor:</label>
+                    <select id="loginSellerSelect" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 8px; font-size: 0.95rem;" required>
+                        <option value="">Cargando vendedores desde Google Sheets...</option>
+                    </select>
+                </div>
                 <div>
-                    <label for="loginPassword" class="input-label">Contraseña de acceso</label>
+                    <label for="loginPassword" class="input-label" style="font-weight: 600;">Clave de acceso personal:</label>
                     <div class="password-input-wrapper">
-                        <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+                        <input type="password" id="loginPassword" placeholder="Ingresa tu clave de la planilla" required autocomplete="current-password">
                         <button type="button" id="togglePassword" class="toggle-password-btn" title="Mostrar/Ocultar contraseña">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                         </button>
                     </div>
                 </div>
                 <label class="remember-me-wrapper">
-                    <input type="checkbox" id="rememberMe">
-                    <span>Recordar acceso en este dispositivo</span>
+                    <input type="checkbox" id="rememberMe" checked>
+                    <span>Recordar sesión de este vendedor</span>
                 </label>
-                <div id="loginError" class="login-error">Contraseña incorrecta. Por favor, intente de nuevo.</div>
+                <div id="loginError" class="login-error" style="display: none;">Clave incorrecta. Revisa tu clave en la planilla.</div>
                 <button type="submit" id="loginSubmitBtn" class="login-btn">Ingresar al Catálogo</button>
             </form>
             <div class="login-footer">

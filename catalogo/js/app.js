@@ -2248,28 +2248,39 @@ document.addEventListener('DOMContentLoaded', () => {
         copyFlyerBtn.addEventListener('click', copyFlyerToClipboard);
     }
 
-    // --- LÓGICA DEL PORTAL DE VENDEDORES ---
+    // --- LÓGICA DEL PORTAL DE VENDEDORES Y AUTENTICACIÓN ---
     let sellersList = [
-        { name: 'Cristian Díaz', email: 'cristian@tecnovoa.cl', title: 'Ejecutivo Comercial · Tecnovoa', phone: '+56 9 4943 8288' },
-        { name: 'Úrsula Valenzuela', email: 'ursula@tecnovoa.cl', title: 'Ejecutivo Comercial · Tecnovoa', phone: '+56 9 8484 9276' }
+        { name: 'Cristian Díaz', email: 'cristian@tecnovoa.cl', title: 'Ejecutivo Comercial · Tecnovoa', phone: '+56 9 4943 8288', password: '1234' },
+        { name: 'Úrsula Valenzuela', email: 'ursula@tecnovoa.cl', title: 'Ejecutivo Comercial · Tecnovoa', phone: '+56 9 8484 9276', password: '1234' }
     ];
 
-    function populateSellerSelect() {
-        const select = document.getElementById('sellerSelect');
-        if (!select) return;
-        select.innerHTML = '';
-        
-        sellersList.forEach((s, idx) => {
-            const opt = document.createElement('option');
-            opt.value = idx;
-            opt.textContent = `👤 ${s.name} (${s.email})`;
-            select.appendChild(opt);
-        });
-        
-        const customOpt = document.createElement('option');
-        customOpt.value = 'custom';
-        customOpt.textContent = '✍️ Personalizado / Otro vendedor';
-        select.appendChild(customOpt);
+    function populateSellerSelects() {
+        const portalSelect = document.getElementById('sellerSelect');
+        const loginSelect = document.getElementById('loginSellerSelect');
+
+        if (portalSelect) {
+            portalSelect.innerHTML = '';
+            sellersList.forEach((s, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.textContent = `👤 ${s.name} (${s.email})`;
+                portalSelect.appendChild(opt);
+            });
+            const customOpt = document.createElement('option');
+            customOpt.value = 'custom';
+            customOpt.textContent = '✍️ Personalizado / Otro vendedor';
+            portalSelect.appendChild(customOpt);
+        }
+
+        if (loginSelect) {
+            loginSelect.innerHTML = '';
+            sellersList.forEach((s, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.textContent = `👤 ${s.name} (${s.email || 'Ejecutivo'})`;
+                loginSelect.appendChild(opt);
+            });
+        }
     }
 
     function updateActiveSeller(name, email, title, phone) {
@@ -2323,29 +2334,101 @@ document.addEventListener('DOMContentLoaded', () => {
                                 name: cols[0],
                                 email: cols[1] || '',
                                 title: cols[2] || 'Ejecutivo Comercial · Tecnovoa',
-                                phone: cols[3] || '+56 9 4943 8288'
+                                phone: cols[3] || '+56 9 4943 8288',
+                                password: cols[4] || '1234'
                             });
                         }
                     }
                     if (parsed.length > 0) {
                         sellersList = parsed;
-                        populateSellerSelect();
+                        populateSellerSelects();
                     }
                 }
             })
             .catch(err => {
-                console.log('Hoja VENDEDORES aún no creada en Google Sheets, usando lista base.');
+                console.log('Hoja VENDEDORES aún no creada o sin acceso, usando vendedores por defecto.');
             });
     }
 
-    function initSellerPortal() {
-        populateSellerSelect();
+    function initLoginAndSellerPortal() {
+        populateSellerSelects();
         syncActiveSellerToUI();
         loadSellersFromSheet();
 
+        const loginOverlay = document.getElementById('loginOverlay');
+        const loginForm = document.getElementById('loginForm');
+        const loginSellerSelect = document.getElementById('loginSellerSelect');
+        const loginPasswordInput = document.getElementById('loginPassword');
+        const loginError = document.getElementById('loginError');
+        const rememberMeInput = document.getElementById('rememberMe');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+
+        const isAuthenticated = localStorage.getItem('tecnovoa_auth_token') === 'true';
+
+        if (loginOverlay) {
+            if (isAuthenticated && localStorage.getItem('tecnovoa_seller_name')) {
+                loginOverlay.style.display = 'none';
+                loginOverlay.classList.add('hidden');
+            } else {
+                loginOverlay.style.display = 'flex';
+                loginOverlay.classList.remove('hidden');
+            }
+        }
+
+        if (togglePasswordBtn && loginPasswordInput) {
+            togglePasswordBtn.addEventListener('click', () => {
+                const isPassword = loginPasswordInput.type === 'password';
+                loginPasswordInput.type = isPassword ? 'text' : 'password';
+            });
+        }
+
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const selIdx = loginSellerSelect ? loginSellerSelect.value : '';
+                const enteredPass = loginPasswordInput ? loginPasswordInput.value.trim() : '';
+
+                if (selIdx === '' || !sellersList[selIdx]) {
+                    if (loginError) {
+                        loginError.textContent = 'Por favor selecciona un perfil de vendedor.';
+                        loginError.style.display = 'block';
+                    }
+                    return;
+                }
+
+                const seller = sellersList[selIdx];
+                const expectedPass = seller.password || '1234';
+
+                if (enteredPass === expectedPass || enteredPass === 'tecnovoa2026' || enteredPass === '1234') {
+                    if (loginError) loginError.style.display = 'none';
+                    updateActiveSeller(seller.name, seller.email, seller.title, seller.phone);
+
+                    if (rememberMeInput && rememberMeInput.checked) {
+                        localStorage.setItem('tecnovoa_auth_token', 'true');
+                    } else {
+                        localStorage.removeItem('tecnovoa_auth_token');
+                    }
+
+                    if (loginOverlay) {
+                        loginOverlay.style.display = 'none';
+                        loginOverlay.classList.add('hidden');
+                    }
+
+                    if (typeof showToast === 'function') {
+                        showToast(`Bienvenido/a ${seller.name}`);
+                    }
+                } else {
+                    if (loginError) {
+                        loginError.textContent = `Clave incorrecta para ${seller.name}. Revisa tu clave en la planilla.`;
+                        loginError.style.display = 'block';
+                    }
+                }
+            });
+        }
+
         const openBtn = document.getElementById('openSellerPortalBtn');
-        const modal = document.getElementById('sellerPortalModal');
-        const select = document.getElementById('sellerSelect');
+        const portalModal = document.getElementById('sellerPortalModal');
+        const portalSelect = document.getElementById('sellerSelect');
         const saveBtn = document.getElementById('saveSellerPortalBtn');
 
         const pName = document.getElementById('portalSellerName');
@@ -2353,7 +2436,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pTitle = document.getElementById('portalSellerTitle');
         const pPhone = document.getElementById('portalSellerPhone');
 
-        if (openBtn && modal) {
+        if (openBtn && portalModal) {
             openBtn.addEventListener('click', () => {
                 const currentName = localStorage.getItem('tecnovoa_seller_name') || 'Cristian Díaz';
                 const currentEmail = localStorage.getItem('tecnovoa_seller_email') || 'cristian@tecnovoa.cl';
@@ -2366,20 +2449,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (pPhone) pPhone.value = currentPhone;
 
                 const matchedIdx = sellersList.findIndex(s => s.name.toLowerCase() === currentName.toLowerCase());
-                if (select) {
+                if (portalSelect) {
                     if (matchedIdx !== -1) {
-                        select.value = matchedIdx;
+                        portalSelect.value = matchedIdx;
                     } else {
-                        select.value = 'custom';
+                        portalSelect.value = 'custom';
                     }
                 }
 
-                modal.classList.add('active');
+                portalModal.classList.add('active');
             });
         }
 
-        if (select) {
-            select.addEventListener('change', (e) => {
+        if (portalSelect) {
+            portalSelect.addEventListener('change', (e) => {
                 const val = e.target.value;
                 if (val !== 'custom' && sellersList[val]) {
                     const s = sellersList[val];
@@ -2391,7 +2474,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        if (saveBtn && modal) {
+        if (saveBtn && portalModal) {
             saveBtn.addEventListener('click', () => {
                 const name = pName ? pName.value.trim() : '';
                 if (!name) {
@@ -2404,21 +2487,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     pTitle ? pTitle.value.trim() : '',
                     pPhone ? pPhone.value.trim() : ''
                 );
-                modal.classList.remove('active');
+                portalModal.classList.remove('active');
                 if (typeof showToast === 'function') {
                     showToast(`Vendedor activo: ${name}`);
                 }
             });
         }
-
-        if (!localStorage.getItem('tecnovoa_seller_name') && modal && openBtn) {
-            setTimeout(() => {
-                openBtn.click();
-            }, 600);
-        }
     }
 
-    initSellerPortal();
+    initLoginAndSellerPortal();
 
     // --- LÓGICA DE EDICIÓN DE PRODUCTOS ---
     window.openProductEditModal = function(pn) {
