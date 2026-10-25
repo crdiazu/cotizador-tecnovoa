@@ -24,8 +24,8 @@
             <form id="loginForm" class="login-form" onsubmit="return false;">
                 <div style="margin-bottom: 0.8rem;">
                     <label for="loginSellerSelect" class="input-label" style="font-weight: 600; margin-bottom: 0.4rem; display: block;">Selecciona tu Perfil de Vendedor:</label>
-                    <select id="loginSellerSelect" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 8px; font-size: 0.95rem;" required>
-                        <option value="">Cargando vendedores desde Google Sheets...</option>
+                    <select id="loginSellerSelect" class="login-select" required>
+                        <option value="" disabled selected>⏳ Sincronizando vendedores desde Google Sheets...</option>
                     </select>
                 </div>
                 <div>
@@ -428,18 +428,14 @@
         <div class="modal-content" style="max-width: 480px; padding: 1.5rem; border-radius: 12px; background: #0F172A; color: #F8FAFC; border: 1px solid #1E293B;">
             <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; border-bottom: 1px solid #334155; padding-bottom: 0.8rem;">
                 <h2 style="font-size: 1.2rem; font-weight: 700; color: #38BDF8; display: flex; align-items: center; gap: 8px; margin: 0;">
-                    👤 Seleccionar Vendedor / Ejecutivo
+                    👤 Perfil de Sesión del Vendedor
                 </h2>
                 <button class="close-btn" onclick="document.getElementById('sellerPortalModal').classList.remove('active')" style="background: none; border: none; color: #94A3B8; font-size: 1.5rem; cursor: pointer;">&times;</button>
             </div>
             
             <form id="sellerPortalForm" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 1rem;">
-                <div class="input-field">
-                    <label for="sellerSelect" style="font-size: 0.82rem; font-weight: 600; color: #94A3B8; margin-bottom: 0.3rem; display: block;">Elegir Ejecutivo de la Lista:</label>
-                    <select id="sellerSelect" style="width: 100%; padding: 10px; background: #1E293B; border: 1px solid #334155; color: #FFF; border-radius: 6px; font-size: 0.9rem;">
-                        <option value="custom">✍️ Personalizado / Otro vendedor</option>
-                    </select>
-                    <small style="color: #64748B; font-size: 0.75rem; margin-top: 4px; display: block;">* La lista se sincroniza con la hoja de Vendedores en Google Sheets si está disponible.</small>
+                <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 8px; padding: 10px 14px; font-size: 0.8rem; color: #94A3B8; line-height: 1.4;">
+                    ℹ️ Esta sesión está protegida con tu clave personal. Para ingresar como otro ejecutivo comercial, presiona <strong style="color: #F87171;">Cerrar Sesión</strong>.
                 </div>
 
                 <div class="input-field">
@@ -464,10 +460,12 @@
 
                 <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.5rem;">
                     <div style="display: flex; gap: 0.6rem;">
-                        <button type="button" id="saveSellerPortalBtn" class="primary-btn block-btn" style="flex: 1; padding: 10px !important; background: #0284C7; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">✅ Confirmar Vendedor</button>
-                        <button type="button" class="sec-btn block-btn" onclick="document.getElementById('sellerPortalModal').classList.remove('active')" style="flex: 1; padding: 10px !important; background: #334155; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Cancelar</button>
+                        <button type="button" id="saveSellerPortalBtn" class="primary-btn block-btn" style="flex: 1; padding: 10px !important; background: #0284C7; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">💾 Guardar Cambios de Contacto</button>
+                        <button type="button" class="sec-btn block-btn" onclick="document.getElementById('sellerPortalModal').classList.remove('active')" style="flex: 1; padding: 10px !important; background: #334155; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">Cerrar</button>
                     </div>
-                    <button type="button" id="logoutSellerBtn" style="width: 100%; padding: 8px; background: rgba(239, 68, 68, 0.12); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; font-weight: 600; font-size: 0.82rem; cursor: pointer; margin-top: 4px;">🔒 Cerrar Sesión / Ingresar con otra clave</button>
+                    <button type="button" id="logoutSellerBtn" style="width: 100%; padding: 10px; background: rgba(239, 68, 68, 0.15); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 6px; font-weight: 700; font-size: 0.88rem; cursor: pointer; margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        🔒 Cerrar Sesión / Cambiar de Vendedor
+                    </button>
                 </div>
             </form>
         </div>

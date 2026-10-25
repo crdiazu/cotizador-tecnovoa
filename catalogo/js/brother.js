@@ -1405,9 +1405,11 @@ document.addEventListener('DOMContentLoaded', () => {
         doc.setFontSize(9);
         doc.setFont(undefined, 'normal');
         doc.setTextColor(80);
-        doc.text('RUT: 77.194.064-1 | Giro: Comercialización Equipos Computacionales', 15, 28);
-        doc.text('Dirección: Av. Pedro de Valdivia N° 273, Of. 606, Providencia, Santiago', 15, 33);
-        doc.text('Contacto Comercial: Úrsula Zúñiga | ursula@tecnovoa.cl | +56 9 8484 9276', 15, 38);
+        const pdfSellerName = localStorage.getItem('tecnovoa_seller_name') || 'Cristian Díaz';
+        const pdfSellerEmail = localStorage.getItem('tecnovoa_seller_email') || 'cristian@tecnovoa.cl';
+        const pdfSellerPhone = localStorage.getItem('tecnovoa_seller_phone') || '+56 9 4943 8288';
+        const pdfSellerTitle = localStorage.getItem('tecnovoa_seller_title') || 'Ejecutivo Comercial · Tecnovoa';
+        doc.text(`Contacto Comercial: ${pdfSellerName} (${pdfSellerTitle}) | ${pdfSellerEmail}${pdfSellerPhone ? ' | ' + pdfSellerPhone : ''}`, 15, 38);
         
         doc.setFontSize(16);
         doc.setFont(undefined, 'bold');
@@ -1930,15 +1932,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.lineWidth = 1;
         ctx.stroke();
         
-        // Avatar con iniciales "CD"
-        const avatarX = 95;
-        const avatarCY = contactY + 40;
-        ctx.fillStyle = '#1976D2';
-        ctx.beginPath();
-        ctx.arc(avatarX, avatarCY, 22, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.font = 'bold 16px Poppins, sans-serif';
-        ctx.fillStyle = '#FFFFFF';
         // Datos del vendedor y avatar dinámico
         const sellerName = document.getElementById('flyerSellerName')?.value || 'Cristian Díaz';
         const sellerTitle = document.getElementById('flyerSellerTitle')?.value || 'Ejecutivo Comercial · Tecnovoa';
