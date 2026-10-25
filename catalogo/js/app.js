@@ -288,12 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function fetchProductOverrides() {
-        return fetch('/api/product-overrides')
-            .then(res => res.json())
-            .catch(err => {
-                console.warn('Could not fetch product overrides:', err);
-                return {};
-            });
+        return Promise.resolve({});
     }
 
     function saveProductOverride(updatedData) {
@@ -1477,16 +1472,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }))
         };
 
-        fetch('/api/log', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(logEntry)
-        })
-        .then(res => res.json())
-        .then(data => console.log('Log de cotización guardado:', data))
-        .catch(err => console.error('Error al guardar log:', err));
+        // Guardar registro en historial local del navegador (100% estático, sin Firebase)
+        try {
+            const history = JSON.parse(localStorage.getItem('tecnovoa_quotes_history') || '[]');
+            history.unshift(logEntry);
+            if (history.length > 50) history.pop();
+            localStorage.setItem('tecnovoa_quotes_history', JSON.stringify(history));
+            console.log('Cotización registrada en historial local.');
+        } catch (e) {
+            console.warn('No se pudo registrar cotización en almacenamiento local:', e);
+        }
 
         // 2. CREACIÓN DE PDF
         const { jsPDF } = window.jspdf;
